@@ -1,0 +1,102 @@
+﻿# RISINGGEN PROPRIETARY LICENSE
+
+**Copyright (c) 2024 RisingGen Development Team. All Rights Reserved.**
+
+## PROPRIETARY SOFTWARE LICENSE AGREEMENT
+
+This Software License Agreement ("Agreement") is entered into between the RisingGen Development Team ("Licensor") and any person or entity ("Licensee") accessing this software repository.
+
+### 1. GRANT OF LICENSE
+
+Subject to the terms and conditions of this Agreement, Licensor hereby grants to Licensee a limited, non-exclusive, non-transferable license to use the RisingGen software ("Software") solely for the purposes explicitly authorized herein.
+
+### 2. AUTHORIZED USE
+
+The Software may only be used by:
+
+**a) Development Team Members:**
+- Sam Davies (@sam-dev) - Lead Developer & Project Manager
+- Stephano (@stephano-dev) - Frontend Specialist & UX Implementation  
+- Andreas (@andreas-dev) - Backend Architecture & Infrastructure
+
+**b) The Church of Jesus Christ of Latter-day Saints:**
+- European Area Leadership for evaluation and oversight
+- Authorized Church representatives for review purposes
+
+**c) End Users:**
+- Access only through official deployment and production environments
+- No direct access to source code or development materials
+
+### 3. PROHIBITED USES
+
+The following activities are STRICTLY PROHIBITED:
+
+- **Commercial Use**: Using the Software for commercial purposes without written consent
+- **Redistribution**: Sharing, distributing, or making available the Software to unauthorized parties
+- **Derivative Works**: Creating modifications, improvements, or derivative works without permission
+- **Reverse Engineering**: Attempting to decompile, disassemble, or reverse engineer the Software
+- **Public Deployment**: Deploying the Software on public servers or cloud services without authorization
+- **Code Extraction**: Copying, extracting, or reusing code portions for other projects
+
+### 4. INTELLECTUAL PROPERTY RIGHTS
+
+All rights, title, and interest in and to the Software, including all intellectual property rights, remain exclusively with the Licensor. This Agreement does not grant any ownership rights to the Licensee.
+
+### 5. CONFIDENTIALITY
+
+The Software contains proprietary and confidential information. Licensee agrees to maintain the confidentiality of the Software and not to disclose any part of it to unauthorized third parties.
+
+### 6. DATA PROTECTION & PRIVACY
+
+The Software is designed to handle personal and sensitive data in compliance with:
+- General Data Protection Regulation (GDPR)
+- Church of Jesus Christ of Latter-day Saints data policies
+- European data protection laws
+
+### 7. WARRANTY DISCLAIMER
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+### 8. LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE.
+
+### 9. TERMINATION
+
+This Agreement may be terminated:
+- Immediately by Licensor for any breach of terms
+- Upon completion of the authorized use period
+- Upon written notice from either party
+
+Upon termination, Licensee must cease all use of the Software and destroy all copies.
+
+### 10. GOVERNING LAW
+
+This Agreement shall be governed by and construed in accordance with the laws of the United Kingdom and European Union regulations.
+
+### 11. CONTACT INFORMATION
+
+For licensing inquiries, permissions, or legal matters:
+
+**RisingGen Development Team**
+Email: legal@risinggen.eu
+GitHub: @risinggen/risinggen
+
+### 12. ACKNOWLEDGMENT
+
+By accessing or using this Software, Licensee acknowledges that they have read, understood, and agree to be bound by the terms and conditions of this Agreement.
+
+---
+
+**NOTICE TO UNAUTHORIZED USERS:**
+
+If you have accessed this repository without proper authorization, you are hereby notified that your access constitutes unauthorized use of proprietary software. You must immediately cease accessing this repository and delete any copies you may have made.
+
+Legal action may be pursued against unauthorized users to the fullest extent of the law.
+
+---
+
+*This license was last updated on August 29, 2025.*
+
+**RisingGen Development Team**
+*"Drawing Europe's Young Adults to the Savior"*

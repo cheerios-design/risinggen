@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen - Documentation Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+        }
+
+        .status-bar {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .status-development { background: #bee3f8; color: #1a365d; }
+        .status-planning { background: #feebc8; color: #c05621; }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .doc-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .doc-card h3 {
+            color: #1a365d;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .doc-card p {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .doc-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .doc-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .doc-link:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .doc-link.secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .doc-link.secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .progress-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .progress-section h2 {
+            color: #1a365d;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .progress-item h4 {
+            color: #1a365d;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .team-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .team-section h2 {
+            color: #1a365d;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .team-member h4 {
+            color: #1a365d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .branch-status {
+            background: #f7fafc;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .branch-active { background: #c6f6d5; color: #22543d; }
+        .branch-development { background: #bee3f8; color: #1a365d; }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .status-bar { flex-direction: column; align-items: stretch; }
+            .docs-grid { grid-template-columns: 1fr; }
+            .progress-grid, .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 RisingGen Documentation</h1>
+            <p>Comprehensive development documentation for Europe's YSA digital platform</p>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-badge status-active">Active</span>
+                MVP Development Phase
+            </div>
+            <div class="status-item">
+                <span class="status-badge status-development">Phase 1</span>
+                Architecture Complete
+            </div>
+            <div class="status-item">
+                <span class="status-badge status-planning">Phase 2</span>
+                Wireframing In Progress
+            </div>
+            <div class="status-item">
+                📅 Last Updated: <strong id="lastUpdated"></strong>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h2>📊 Development Progress</h2>
+            <div class="progress-grid">
+                <div class="progress-item">
+                    <h4>Phase 1: Architecture</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <small>✅ Site Map, User Flows, Content Hierarchy</small>
+                </div>
+                <div class="progress-item">
+                    <h4>Phase 2: Wireframes</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
+                    </div>
+                    <small>🚧 UI/UX Design & Component Library</small>
+                </div>
+                <div class="progress-item">
+                    <h4>Phase 3: Development</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 5%"></div>
+                    </div>
+                    <small>⏳ Frontend & Backend Implementation</small>
+                </div>
+                <div class="progress-item">
+                    <h4>Phase 4: Testing</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>📋 QA, User Testing, Launch Prep</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2>👥 Development Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-avatar">S</div>
+                    <h4>Sam Davies</h4>
+                    <div class="team-role">Lead Developer & Project Manager</div>
+                    <div class="branch-status branch-active">sam-dev branch</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">St</div>
+                    <h4>Stephano</h4>
+                    <div class="team-role">Frontend Specialist & UX</div>
+                    <div class="branch-status branch-development">stephano-dev branch</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">A</div>
+                    <h4>Andreas</h4>
+                    <div class="team-role">Backend Architecture</div>
+                    <div class="branch-status branch-development">andreas-dev branch</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">T</div>
+                    <h4>Test Branch</h4>
+                    <div class="team-role">Experimental Features</div>
+                    <div class="branch-status">test-extras branch</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="docs-grid">
+            <div class="doc-card">
+                <h3>🏗️ Architecture Documentation</h3>
+                <p>Complete system architecture, technical specifications, and infrastructure design for the RisingGen platform.</p>
+                <div class="doc-links">
+                    <a href="architecture/system-overview.md" class="doc-link">System Overview</a>
+                    <a href="architecture/database-design.md" class="doc-link">Database Design</a>
+                    <a href="architecture/api-specification.md" class="doc-link secondary">API Specs</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h3>🔧 Development Setup</h3>
+                <p>Everything developers need to get started: environment setup, coding standards, and workflow processes.</p>
+                <div class="doc-links">
+                    <a href="development/getting-started.md" class="doc-link">Getting Started</a>
+                    <a href="development/coding-standards.md" class="doc-link">Standards</a>
+                    <a href="development/testing-guide.md" class="doc-link secondary">Testing</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h3>📋 Project Management</h3>
+                <p>Sprint planning, feature tracking, and project roadmaps for coordinated development across team branches.</p>
+                <div class="doc-links">
+                    <a href="project-management/roadmap.md" class="doc-link">Roadmap</a>
+                    <a href="project-management/sprint-planning.md" class="doc-link">Sprints</a>
+                    <a href="project-management/feature-tracking.md" class="doc-link secondary">Features</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h3>🎨 Design System</h3>
+                <p>UI/UX guidelines, component library, and design tokens for consistent user experience across the platform.</p>
+                <div class="doc-links">
+                    <a href="design/design-system.md" class="doc-link">Design System</a>
+                    <a href="design/component-library.md" class="doc-link">Components</a>
+                    <a href="design/brand-guidelines.md" class="doc-link secondary">Branding</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h3>🌐 API Documentation</h3>
+                <p>Complete REST API documentation with endpoints, authentication, and integration examples.</p>
+                <div class="doc-links">
+                    <a href="api/authentication.md" class="doc-link">Authentication</a>
+                    <a href="api/endpoints.md" class="doc-link">Endpoints</a>
+                    <a href="api/examples.md" class="doc-link secondary">Examples</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h3>📊 Analytics & Metrics</h3>
+                <p>Performance monitoring, user analytics, and success metrics tracking for platform optimization.</p>
+                <div class="doc-links">
+                    <a href="analytics/performance.md" class="doc-link">Performance</a>
+                    <a href="analytics/user-metrics.md" class="doc-link">User Metrics</a>
+                    <a href="analytics/reporting.md" class="doc-link secondary">Reporting</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Built with ❤️ for European YSA Communities</p>
+            <p><em>"Draw Europe's young adults to the Savior and their covenants"</em></p>
+        </div>
+    </div>
+
+    <script>
+        // Update last modified date
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+        
+        // Add interactive progress bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.width = bar.style.width;
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
