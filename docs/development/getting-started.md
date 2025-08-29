@@ -33,7 +33,7 @@ cp .env.example .env.local
 # MongoDB setup (user data)
 mongodb://localhost:27017/risinggen-dev
 
-# PostgreSQL setup (events data)  
+# PostgreSQL setup (events data)
 postgresql://localhost:5432/risinggen_events
 ```
 
@@ -99,4 +99,4 @@ npm run format:check   # Format validation
 
 ---
 
-*For detailed setup issues, check the troubleshooting guide or contact @sam-dev*
+_For detailed setup issues, check the troubleshooting guide or contact @sam-dev_

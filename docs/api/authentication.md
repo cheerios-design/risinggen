@@ -20,6 +20,7 @@ Content-Type: application/json
 ```
 
 **Response**:
+
 ```json
 {
   "success": true,
@@ -38,6 +39,7 @@ Content-Type: application/json
 #### Token Verification
 
 Include JWT token in Authorization header:
+
 ```http
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
@@ -54,11 +56,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ### Events API
 
 #### Get Events
+
 ```http
 GET /api/events?page=1&limit=20&country=UK&language=en
 ```
 
 #### Create Event (Organizer only)
+
 ```http
 POST /api/events
 Content-Type: application/json
@@ -86,6 +90,7 @@ Authorization: Bearer {token}
 ### Registration API
 
 #### Register for Event
+
 ```http
 POST /api/events/{eventId}/register
 Content-Type: application/json
@@ -104,6 +109,7 @@ Authorization: Bearer {token}
 ### Communication API
 
 #### Send Message
+
 ```http
 POST /api/communication/channels/{channelId}/messages
 Content-Type: application/json
@@ -119,6 +125,7 @@ Authorization: Bearer {token}
 ### Financial API
 
 #### Process Payment
+
 ```http
 POST /api/payments/process
 Content-Type: application/json
@@ -164,7 +171,7 @@ All API responses use consistent error format:
 ## Rate Limiting
 
 - **Public endpoints**: 100 requests/minute
-- **Authenticated endpoints**: 1000 requests/minute  
+- **Authenticated endpoints**: 1000 requests/minute
 - **Payment endpoints**: 10 requests/minute
 
 ---

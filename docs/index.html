@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,9 +78,20 @@
             text-transform: uppercase;
         }
 
-        .status-active { background: #c6f6d5; color: #22543d; }
-        .status-development { background: #bee3f8; color: #1a365d; }
-        .status-planning { background: #feebc8; color: #c05621; }
+        .status-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-development {
+            background: #bee3f8;
+            color: #1a365d;
+        }
+
+        .status-planning {
+            background: #feebc8;
+            color: #c05621;
+        }
 
         .docs-grid {
             display: grid;
@@ -267,8 +279,15 @@
             font-weight: 500;
         }
 
-        .branch-active { background: #c6f6d5; color: #22543d; }
-        .branch-development { background: #bee3f8; color: #1a365d; }
+        .branch-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .branch-development {
+            background: #bee3f8;
+            color: #1a365d;
+        }
 
         .footer {
             text-align: center;
@@ -278,13 +297,27 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 2rem; }
-            .status-bar { flex-direction: column; align-items: stretch; }
-            .docs-grid { grid-template-columns: 1fr; }
-            .progress-grid, .team-grid { grid-template-columns: 1fr; }
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -377,7 +410,8 @@
         <div class="docs-grid">
             <div class="doc-card">
                 <h3>🏗️ Architecture Documentation</h3>
-                <p>Complete system architecture, technical specifications, and infrastructure design for the RisingGen platform.</p>
+                <p>Complete system architecture, technical specifications, and infrastructure design for the RisingGen
+                    platform.</p>
                 <div class="doc-links">
                     <a href="architecture/system-overview.md" class="doc-link">System Overview</a>
                     <a href="architecture/database-design.md" class="doc-link">Database Design</a>
@@ -387,7 +421,8 @@
 
             <div class="doc-card">
                 <h3>🔧 Development Setup</h3>
-                <p>Everything developers need to get started: environment setup, coding standards, and workflow processes.</p>
+                <p>Everything developers need to get started: environment setup, coding standards, and workflow
+                    processes.</p>
                 <div class="doc-links">
                     <a href="development/getting-started.md" class="doc-link">Getting Started</a>
                     <a href="development/coding-standards.md" class="doc-link">Standards</a>
@@ -397,7 +432,8 @@
 
             <div class="doc-card">
                 <h3>📋 Project Management</h3>
-                <p>Sprint planning, feature tracking, and project roadmaps for coordinated development across team branches.</p>
+                <p>Sprint planning, feature tracking, and project roadmaps for coordinated development across team
+                    branches.</p>
                 <div class="doc-links">
                     <a href="project-management/roadmap.md" class="doc-link">Roadmap</a>
                     <a href="project-management/sprint-planning.md" class="doc-link">Sprints</a>
@@ -407,7 +443,8 @@
 
             <div class="doc-card">
                 <h3>🎨 Design System</h3>
-                <p>UI/UX guidelines, component library, and design tokens for consistent user experience across the platform.</p>
+                <p>UI/UX guidelines, component library, and design tokens for consistent user experience across the
+                    platform.</p>
                 <div class="doc-links">
                     <a href="design/design-system.md" class="doc-link">Design System</a>
                     <a href="design/component-library.md" class="doc-link">Components</a>
@@ -445,9 +482,9 @@
     <script>
         // Update last modified date
         document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
-        
+
         // Add interactive progress bars
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const progressBars = document.querySelectorAll('.progress-fill');
             progressBars.forEach((bar, index) => {
                 setTimeout(() => {
@@ -457,4 +494,5 @@
         });
     </script>
 </body>
+
 </html>
