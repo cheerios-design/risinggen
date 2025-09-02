@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen System Architecture - Interactive Documentation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .sidebar h3 {
+            color: #1a365d;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content {
+            margin-left: 290px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul,
+        ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .architecture-diagram {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tech-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .tech-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tech-list li {
+            background: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+        }
+
+        .system-flow {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            background: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .component-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .component-name {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .component-desc {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                transform: translateX(50%);
+                top: auto;
+                bottom: -15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ RisingGen System Architecture</h1>
+            <p>Complete system architecture overview with technical specifications and infrastructure design</p>
+            <div class="breadcrumb">
+                <a href="../index.html">← Back to Documentation Hub</a>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>🏗️ Architecture</h3>
+            <a href="#overview" class="nav-item">Overview</a>
+            <a href="#components" class="nav-item">System Components</a>
+            <a href="#frontend" class="nav-item">Frontend Stack</a>
+            <a href="#backend" class="nav-item">Backend Services</a>
+            <a href="#database" class="nav-item">Database Layer</a>
+            <a href="#infrastructure" class="nav-item">Infrastructure</a>
+            <a href="#flow" class="nav-item">Data Flow</a>
+            <a href="#scalability" class="nav-item">Scalability</a>
+            <a href="#security" class="nav-item">Security</a>
+        </div>
+
+        <div class="content">
+            <section id="overview">
+                <h2>📋 Architecture Overview</h2>
+                <p>The RisingGen platform is designed as a modern web application with a microservices architecture to
+                    support Europe's YSA digital needs. Built for scalability, performance, and maintainability across
+                    diverse European communities.</p>
+
+                <div class="architecture-diagram">
+                    <h3 style="color: #e2e8f0; margin-bottom: 20px;">System Architecture Diagram</h3>
+                    <pre>
+┌─────────────────┐    ┌──────────────────────────────────┐    ┌─────────────────┐
+│                 │    │                                  │    │                 │
+│   Web Client    │    │           API Gateway            │    │   Databases     │
+│   Mobile App    │◄──►│                                  │◄──►│                 │
+│                 │    │                                  │    │                 │
+└─────────────────┘    └──────────────┬──────────┬────────┘    └─────────────────┘
+                                       │          │
+                       ┌───────────────▼──────────▼───────────────┐
+                       │                                          │
+                       │          Microservices Layer            │
+                       │                                          │
+                       │  ┌─────────┐ ┌─────────┐ ┌─────────┐   │
+                       │  │  User   │ │  Event  │ │Content  │   │
+                       │  │Service  │ │Service  │ │Service  │   │
+                       │  └─────────┘ └─────────┘ └─────────┘   │
+                       │                                          │
+                       └──────────────────────────────────────────┘
+                    </pre>
+                </div>
+            </section>
+
+            <section id="components">
+                <h2>🔧 System Components</h2>
+
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <div class="tech-title">Frontend Layer</div>
+                        <ul class="tech-list">
+                            <li>React.js <span class="tech-badge">v18</span></li>
+                            <li>TypeScript <span class="tech-badge">Type Safety</span></li>
+                            <li>Material UI <span class="tech-badge">Design System</span></li>
+                            <li>Redux Toolkit <span class="tech-badge">State Mgmt</span></li>
+                            <li>Next.js <span class="tech-badge">SSR/SSG</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">Backend Services</div>
+                        <ul class="tech-list">
+                            <li>Node.js <span class="tech-badge">Runtime</span></li>
+                            <li>Express.js <span class="tech-badge">API Framework</span></li>
+                            <li>JWT <span class="tech-badge">Authentication</span></li>
+                            <li>GraphQL <span class="tech-badge">API Layer</span></li>
+                            <li>Socket.io <span class="tech-badge">Real-time</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">Data Layer</div>
+                        <ul class="tech-list">
+                            <li>MongoDB <span class="tech-badge">Document DB</span></li>
+                            <li>PostgreSQL <span class="tech-badge">Relational</span></li>
+                            <li>Redis <span class="tech-badge">Caching</span></li>
+                            <li>Elasticsearch <span class="tech-badge">Search</span></li>
+                            <li>S3 <span class="tech-badge">File Storage</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">Infrastructure</div>
+                        <ul class="tech-list">
+                            <li>AWS <span class="tech-badge">Cloud</span></li>
+                            <li>Docker <span class="tech-badge">Containers</span></li>
+                            <li>Kubernetes <span class="tech-badge">Orchestration</span></li>
+                            <li>Cloudflare <span class="tech-badge">CDN</span></li>
+                            <li>GitHub Actions <span class="tech-badge">CI/CD</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="frontend">
+                <h2>🎨 Frontend Architecture</h2>
+
+                <h3>Technology Stack</h3>
+                <div class="component-grid">
+                    <div class="component-item">
+                        <div class="component-name">React.js with TypeScript</div>
+                        <div class="component-desc">Modern component-based architecture with type safety</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Material UI Design System</div>
+                        <div class="component-desc">Consistent UI components and design tokens</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Redux Toolkit</div>
+                        <div class="component-desc">Centralized state management with predictable updates</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Next.js Framework</div>
+                        <div class="component-desc">SSR/SSG for performance and SEO optimization</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">i18next Internationalization</div>
+                        <div class="component-desc">Support for 15+ European languages</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">WCAG 2.1 AA Compliance</div>
+                        <div class="component-desc">Full accessibility support for all users</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="backend">
+                <h2>⚙️ Backend Services</h2>
+
+                <h3>Microservices Architecture</h3>
+                <div class="component-grid">
+                    <div class="component-item">
+                        <div class="component-name">User Service</div>
+                        <div class="component-desc">Authentication, profiles, and user management</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Event Service</div>
+                        <div class="component-desc">Event creation, registration, and management</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Communication Service</div>
+                        <div class="component-desc">Messages, notifications, and announcements</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Payment Service</div>
+                        <div class="component-desc">Event fees, donations, and financial transactions</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Content Service</div>
+                        <div class="component-desc">Articles, devotionals, and media content</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Analytics Service</div>
+                        <div class="component-desc">Usage metrics and performance tracking</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="database">
+                <h2>🗄️ Database Layer</h2>
+
+                <h3>Multi-Database Strategy</h3>
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <div class="tech-title">MongoDB (Primary)</div>
+                        <ul class="tech-list">
+                            <li>User profiles and preferences</li>
+                            <li>Content and media metadata</li>
+                            <li>Social connections and interactions</li>
+                            <li>Flexible schema for rapid development</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">PostgreSQL (Relational)</div>
+                        <ul class="tech-list">
+                            <li>Event data and registrations</li>
+                            <li>Financial transactions</li>
+                            <li>Structured reporting data</li>
+                            <li>ACID compliance for critical operations</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">Redis (Caching)</div>
+                        <ul class="tech-list">
+                            <li>Session management</li>
+                            <li>Frequently accessed data</li>
+                            <li>Real-time messaging queues</li>
+                            <li>Performance optimization</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-title">Elasticsearch</div>
+                        <ul class="tech-list">
+                            <li>Full-text search capabilities</li>
+                            <li>Event and content discovery</li>
+                            <li>Advanced filtering and faceted search</li>
+                            <li>Analytics and aggregations</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="infrastructure">
+                <h2>☁️ Infrastructure & Deployment</h2>
+
+                <div class="system-flow">
+                    <h3>Deployment Pipeline</h3>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <h4>Code Commit</h4>
+                            <p>GitHub repository with branch protection</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <h4>CI/CD Pipeline</h4>
+                            <p>GitHub Actions automated testing</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <h4>Docker Build</h4>
+                            <p>Containerization and image creation</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <h4>Kubernetes Deploy</h4>
+                            <p>Production deployment orchestration</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Cloud Infrastructure</h3>
+                <div class="component-grid">
+                    <div class="component-item">
+                        <div class="component-name">AWS Primary Hosting</div>
+                        <div class="component-desc">ECS, RDS, S3, CloudFront for main deployment</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Azure Backup</div>
+                        <div class="component-desc">Disaster recovery and geographic redundancy</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Cloudflare CDN</div>
+                        <div class="component-desc">Global content delivery and DDoS protection</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Monitoring Stack</div>
+                        <div class="component-desc">New Relic, Sentry for performance and error tracking</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="flow">
+                <h2>🔄 Data Flow & API Design</h2>
+
+                <h3>Request Flow</h3>
+                <div class="system-flow">
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <h4>Client Request</h4>
+                            <p>Web/Mobile app initiates API call</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <h4>API Gateway</h4>
+                            <p>Authentication, rate limiting, routing</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <h4>Microservice</h4>
+                            <p>Business logic processing</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">4</div>
+                            <h4>Data Layer</h4>
+                            <p>Database operations and caching</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">5</div>
+                            <h4>Response</h4>
+                            <p>JSON API response with data</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scalability">
+                <h2>📈 Scalability & Performance</h2>
+
+                <h3>Horizontal Scaling Strategy</h3>
+                <ul>
+                    <li><strong>Load Balancing:</strong> AWS Application Load Balancer for traffic distribution</li>
+                    <li><strong>Auto Scaling:</strong> Kubernetes HPA for dynamic resource allocation</li>
+                    <li><strong>Database Scaling:</strong> Read replicas and sharding strategies</li>
+                    <li><strong>CDN Optimization:</strong> Static asset distribution globally</li>
+                    <li><strong>Caching Layers:</strong> Multi-tier caching for performance</li>
+                </ul>
+
+                <h3>Performance Targets</h3>
+                <div class="component-grid">
+                    <div class="component-item">
+                        <div class="component-name">API Response Time</div>
+                        <div class="component-desc">&lt; 200ms for 95th percentile</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Page Load Time</div>
+                        <div class="component-desc">&lt; 3 seconds on 3G networks</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Uptime Target</div>
+                        <div class="component-desc">99.9% availability SLA</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Concurrent Users</div>
+                        <div class="component-desc">Support 10,000+ simultaneous users</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="security">
+                <h2>🔒 Security Architecture</h2>
+
+                <h3>Security Measures</h3>
+                <ul>
+                    <li><strong>Authentication:</strong> JWT tokens with Church SSO integration</li>
+                    <li><strong>Authorization:</strong> Role-based access control (RBAC)</li>
+                    <li><strong>Data Encryption:</strong> AES-256 at rest, TLS 1.3 in transit</li>
+                    <li><strong>API Security:</strong> Rate limiting, input validation, CORS policies</li>
+                    <li><strong>Infrastructure:</strong> VPC, security groups, WAF protection</li>
+                    <li><strong>Compliance:</strong> GDPR compliant data handling</li>
+                    <li><strong>Monitoring:</strong> Security event logging and alerting</li>
+                </ul>
+
+                <h3>Data Protection</h3>
+                <div class="component-grid">
+                    <div class="component-item">
+                        <div class="component-name">Personal Data</div>
+                        <div class="component-desc">Encrypted storage with access controls</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Payment Information</div>
+                        <div class="component-desc">PCI DSS compliant processing</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Session Management</div>
+                        <div class="component-desc">Secure token handling and expiration</div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-name">Audit Logging</div>
+                        <div class="component-desc">Comprehensive security event tracking</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>📚 Related Documentation</h2>
+                <ul>
+                    <li><a href="database-design.md" style="color: #667eea;">Database Design Details</a></li>
+                    <li><a href="api-specification.md" style="color: #667eea;">API Specifications</a></li>
+                    <li><a href="../api/authentication.html" style="color: #667eea;">Authentication Guide</a></li>
+                    <li><a href="../development/getting-started.html" style="color: #667eea;">Development Setup</a></li>
+                    <li><a href="../analytics/analytics-examples.html" style="color: #667eea;">Analytics
+                            Implementation</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll to sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

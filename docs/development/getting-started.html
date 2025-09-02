@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen Development Setup - Interactive Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .setup-progress {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .progress-tracker {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .progress-step {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.completed {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .progress-step.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .step-number {
+            background: #e2e8f0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .progress-step.completed .step-number {
+            background: #22c55e;
+            color: white;
+        }
+
+        .progress-step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .sidebar h3 {
+            color: #1a365d;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content {
+            margin-left: 290px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul,
+        ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .prerequisite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .prerequisite-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .prereq-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prereq-version {
+            background: #667eea;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+
+        .prereq-desc {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .check-status {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .check-pass {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .check-fail {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .check-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .command-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .demo-terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 15px;
+        }
+
+        .terminal-line {
+            margin: 5px 0;
+        }
+
+        .terminal-prompt {
+            color: #22c55e;
+        }
+
+        .terminal-command {
+            color: #e2e8f0;
+        }
+
+        .terminal-output {
+            color: #9ca3af;
+        }
+
+        .setup-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .card-status {
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: auto;
+        }
+
+        .status-todo {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-done {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .run-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px 10px 0;
+        }
+
+        .run-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .prerequisite-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-tracker {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 RisingGen Development Setup</h1>
+            <p>Complete development environment setup guide with interactive installation steps</p>
+            <div class="breadcrumb">
+                <a href="../index.html">← Back to Documentation Hub</a>
+            </div>
+        </div>
+
+        <div class="setup-progress">
+            <h2 style="color: #1a365d; margin-bottom: 20px; border: none; font-size: 1.5rem;">📋 Setup Progress Tracker
+            </h2>
+
+            <div class="progress-tracker">
+                <div class="progress-step" id="step-1">
+                    <div class="step-number">1</div>
+                    <h4>Prerequisites</h4>
+                    <p>Install required tools</p>
+                </div>
+                <div class="progress-step" id="step-2">
+                    <div class="step-number">2</div>
+                    <h4>Repository</h4>
+                    <p>Clone and setup repo</p>
+                </div>
+                <div class="progress-step" id="step-3">
+                    <div class="step-number">3</div>
+                    <h4>Database</h4>
+                    <p>Configure databases</p>
+                </div>
+                <div class="progress-step" id="step-4">
+                    <div class="step-number">4</div>
+                    <h4>Environment</h4>
+                    <p>Set up env variables</p>
+                </div>
+                <div class="progress-step" id="step-5">
+                    <div class="step-number">5</div>
+                    <h4>Development</h4>
+                    <p>Start dev servers</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>🔧 Setup Guide</h3>
+            <a href="#prerequisites" class="nav-item">Prerequisites</a>
+            <a href="#repository" class="nav-item">Repository Setup</a>
+            <a href="#database" class="nav-item">Database Config</a>
+            <a href="#environment" class="nav-item">Environment Variables</a>
+            <a href="#development" class="nav-item">Development Servers</a>
+            <a href="#testing" class="nav-item">Testing Setup</a>
+            <a href="#vscode" class="nav-item">VS Code Config</a>
+            <a href="#troubleshooting" class="nav-item">Troubleshooting</a>
+        </div>
+
+        <div class="content">
+            <section id="prerequisites">
+                <h2>📋 Prerequisites</h2>
+                <p>Before setting up the RisingGen development environment, ensure you have the following tools
+                    installed:</p>
+
+                <div class="prerequisite-grid">
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            Node.js & npm
+                            <span class="prereq-version">18+</span>
+                        </div>
+                        <div class="prereq-desc">JavaScript runtime and package manager for the frontend and API servers
+                        </div>
+                        <div class="check-status check-pending" id="node-status">Checking...</div>
+                    </div>
+
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            MongoDB
+                            <span class="prereq-version">5.0+</span>
+                        </div>
+                        <div class="prereq-desc">Document database for user data, profiles, and content storage</div>
+                        <div class="check-status check-pending" id="mongo-status">Checking...</div>
+                    </div>
+
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            PostgreSQL
+                            <span class="prereq-version">14+</span>
+                        </div>
+                        <div class="prereq-desc">Relational database for events, transactions, and structured data</div>
+                        <div class="check-status check-pending" id="postgres-status">Checking...</div>
+                    </div>
+
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            Git
+                            <span class="prereq-version">Latest</span>
+                        </div>
+                        <div class="prereq-desc">Version control system with SSH keys configured for GitHub</div>
+                        <div class="check-status check-pending" id="git-status">Checking...</div>
+                    </div>
+
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            VS Code
+                            <span class="prereq-version">Recommended</span>
+                        </div>
+                        <div class="prereq-desc">Code editor with recommended extensions for development</div>
+                        <div class="check-status check-pending" id="vscode-status">Optional</div>
+                    </div>
+
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">
+                            Docker
+                            <span class="prereq-version">Optional</span>
+                        </div>
+                        <div class="prereq-desc">Containerization platform for easy database and service management
+                        </div>
+                        <div class="check-status check-pending" id="docker-status">Optional</div>
+                    </div>
+                </div>
+
+                <button class="run-btn" onclick="checkPrerequisites()">🔍 Check Prerequisites</button>
+            </section>
+
+            <section id="repository">
+                <h2>📁 Repository Setup</h2>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">1. Clone Repository</div>
+                        <div class="card-status status-todo" id="clone-status">To Do</div>
+                    </div>
+
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Clone the repository
+                        git clone git@github.com:risinggen/risinggen.git
+                        cd risinggen
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('clone')">▶ Run Clone Command</button>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">2. Install Dependencies</div>
+                        <div class="card-status status-todo" id="install-status">To Do</div>
+                    </div>
+
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Install all dependencies
+                        npm install
+
+                        # Or use yarn if preferred
+                        yarn install
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('install')">▶ Install Dependencies</button>
+                </div>
+
+                <div class="command-demo">
+                    <h3>📺 Live Terminal Demo</h3>
+                    <p>Watch the repository setup process:</p>
+                    <div class="demo-terminal" id="demo-terminal">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command">Ready to run commands...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="database">
+                <h2>🗄️ Database Configuration</h2>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">MongoDB Setup</div>
+                        <div class="card-status status-todo" id="mongodb-status">To Do</div>
+                    </div>
+
+                    <h4>Local Installation</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # MongoDB connection string for development
+                        mongodb://localhost:27017/risinggen-dev
+
+                        # Start MongoDB service
+                        brew services start mongodb-community # macOS
+                        sudo systemctl start mongod # Linux
+                        net start MongoDB # Windows
+                    </div>
+
+                    <h4>Docker Alternative</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Run MongoDB in Docker
+                        docker run -d \
+                        --name risinggen-mongo \
+                        -p 27017:27017 \
+                        -e MONGO_INITDB_DATABASE=risinggen-dev \
+                        mongo:5.0
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('mongodb')">▶ Setup MongoDB</button>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">PostgreSQL Setup</div>
+                        <div class="card-status status-todo" id="postgresql-status">To Do</div>
+                    </div>
+
+                    <h4>Local Installation</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # PostgreSQL connection for events data
+                        postgresql://localhost:5432/risinggen_events
+
+                        # Create database and user
+                        createdb risinggen_events
+                        createuser risinggen_dev -P
+                    </div>
+
+                    <h4>Docker Alternative</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Run PostgreSQL in Docker
+                        docker run -d \
+                        --name risinggen-postgres \
+                        -p 5432:5432 \
+                        -e POSTGRES_DB=risinggen_events \
+                        -e POSTGRES_USER=risinggen_dev \
+                        -e POSTGRES_PASSWORD=development \
+                        postgres:14
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('postgresql')">▶ Setup PostgreSQL</button>
+                </div>
+            </section>
+
+            <section id="environment">
+                <h2>⚙️ Environment Variables</h2>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">Environment Configuration</div>
+                        <div class="card-status status-todo" id="env-status">To Do</div>
+                    </div>
+
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Copy example environment file
+                        cp .env.example .env.local
+
+                        # Edit with your configuration
+                        nano .env.local # or use your preferred editor
+                    </div>
+
+                    <h4>Required Environment Variables</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Database URLs
+                        MONGODB_URL=mongodb://localhost:27017/risinggen-dev
+                        POSTGRES_URL=postgresql://risinggen_dev:development@localhost:5432/risinggen_events
+
+                        # JWT Configuration
+                        JWT_SECRET=your-super-secret-jwt-key-here
+                        JWT_EXPIRES_IN=24h
+
+                        # Church SSO (Development keys)
+                        CHURCH_SSO_CLIENT_ID=dev-client-id
+                        CHURCH_SSO_CLIENT_SECRET=dev-client-secret
+                        CHURCH_SSO_REDIRECT_URL=http://localhost:3000/auth/callback
+
+                        # API Configuration
+                        API_PORT=3001
+                        FRONTEND_URL=http://localhost:3000
+
+                        # External Services (Optional for local dev)
+                        REDIS_URL=redis://localhost:6379
+                        ELASTICSEARCH_URL=http://localhost:9200
+
+                        # Email Service (Development)
+                        SMTP_HOST=smtp.mailtrap.io
+                        SMTP_PORT=2525
+                        SMTP_USER=your-mailtrap-user
+                        SMTP_PASS=your-mailtrap-pass
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('env')">▶ Setup Environment</button>
+                </div>
+            </section>
+
+            <section id="development">
+                <h2>🚀 Development Servers</h2>
+
+                <div class="setup-card">
+                    <div class="card-header">
+                        <div class="card-title">Start Development Environment</div>
+                        <div class="card-status status-todo" id="dev-status">To Do</div>
+                    </div>
+
+                    <h4>All Services at Once</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Start all development services
+                        npm run dev:all
+
+                        # This will start:
+                        # - Frontend React app on http://localhost:3000
+                        # - Backend API server on http://localhost:3001
+                        # - Database services (if using Docker)
+                    </div>
+
+                    <h4>Individual Services</h4>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Start services individually
+                        npm run dev:frontend # React app on :3000
+                        npm run dev:backend # API server on :3001
+                        npm run dev:db # Database services
+
+                        # Or use PM2 for process management
+                        pm2 start ecosystem.config.js
+                    </div>
+
+                    <button class="run-btn" onclick="simulateCommand('dev')">▶ Start Development</button>
+                </div>
+
+                <h3>🌐 Service URLs</h3>
+                <div class="prerequisite-grid">
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">Frontend App</div>
+                        <div class="prereq-desc"><a href="http://localhost:3000"
+                                target="_blank">http://localhost:3000</a></div>
+                    </div>
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">API Server</div>
+                        <div class="prereq-desc"><a href="http://localhost:3001/api"
+                                target="_blank">http://localhost:3001/api</a></div>
+                    </div>
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">API Docs</div>
+                        <div class="prereq-desc"><a href="http://localhost:3001/docs"
+                                target="_blank">http://localhost:3001/docs</a></div>
+                    </div>
+                    <div class="prerequisite-card">
+                        <div class="prereq-title">MongoDB Admin</div>
+                        <div class="prereq-desc"><a href="http://localhost:8081"
+                                target="_blank">http://localhost:8081</a> (if using Docker)</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="testing">
+                <h2>🧪 Testing Setup</h2>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    # Run all tests
+                    npm test
+
+                    # Run tests in watch mode
+                    npm run test:watch
+
+                    # Run tests with coverage
+                    npm run test:coverage
+
+                    # Run specific test suites
+                    npm run test:unit # Unit tests
+                    npm run test:integration # Integration tests
+                    npm run test:e2e # End-to-end tests
+                </div>
+
+                <h3>Test Database Setup</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    # Create test databases
+                    createdb risinggen_test
+                    mongo
+                    use risinggen-test
+                </div>
+            </section>
+
+            <section id="vscode">
+                <h2>💻 VS Code Configuration</h2>
+
+                <h3>Recommended Extensions</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    # Install recommended extensions
+                    code --install-extension ms-vscode.vscode-typescript-next
+                    code --install-extension bradlc.vscode-tailwindcss
+                    code --install-extension esbenp.prettier-vscode
+                    code --install-extension ms-vscode.vscode-eslint
+                    code --install-extension ms-vscode.vscode-json
+                    code --install-extension ms-python.python
+                </div>
+
+                <h3>Workspace Settings</h3>
+                <p>The repository includes <code>.vscode/settings.json</code> with optimized settings for:</p>
+                <ul>
+                    <li>TypeScript development</li>
+                    <li>ESLint and Prettier integration</li>
+                    <li>Debugging configurations</li>
+                    <li>Task runner setup</li>
+                </ul>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>🔧 Troubleshooting</h2>
+
+                <h3>Common Issues</h3>
+
+                <div class="setup-card">
+                    <div class="card-title">Port Already in Use</div>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Kill process on port 3000
+                        lsof -ti:3000 | xargs kill -9
+
+                        # Or specify different ports
+                        PORT=3002 npm run dev:frontend
+                        API_PORT=3003 npm run dev:backend
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-title">Database Connection Issues</div>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Test MongoDB connection
+                        mongo --eval "db.adminCommand('ismaster')"
+
+                        # Test PostgreSQL connection
+                        psql -h localhost -p 5432 -U risinggen_dev -d risinggen_events
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-title">Node Modules Issues</div>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        # Clean install
+                        rm -rf node_modules package-lock.json
+                        npm install
+
+                        # Clear npm cache
+                        npm cache clean --force
+                    </div>
+                </div>
+
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>🐛 <strong>Bug Reports:</strong> Create an issue on GitHub</li>
+                    <li>💬 <strong>Questions:</strong> Use GitHub Discussions</li>
+                    <li>📧 <strong>Support:</strong> dev-support@risinggen.eu</li>
+                    <li>📖 <strong>Documentation:</strong> Check other guide sections</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>🎯 Next Steps</h2>
+                <p>Once your development environment is running:</p>
+                <ol>
+                    <li>Review the <a href="coding-standards.md" style="color: #667eea;">Coding Standards</a></li>
+                    <li>Read the <a href="../architecture/system-overview.html" style="color: #667eea;">System
+                            Architecture</a></li>
+                    <li>Check the <a href="../api/authentication.html" style="color: #667eea;">API Documentation</a>
+                    </li>
+                    <li>Set up your <a href="testing-guide.md" style="color: #667eea;">Testing Environment</a></li>
+                    <li>Join the development team channels</li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Simulate prerequisite checking
+        function checkPrerequisites() {
+            const checks = [
+                { id: 'node-status', delay: 500, result: 'pass', text: '✅ Node.js 18.16.0 detected' },
+                { id: 'mongo-status', delay: 1000, result: 'pass', text: '✅ MongoDB 5.0.8 running' },
+                { id: 'postgres-status', delay: 1500, result: 'fail', text: '❌ PostgreSQL not found' },
+                { id: 'git-status', delay: 2000, result: 'pass', text: '✅ Git 2.39.0 configured' },
+                { id: 'vscode-status', delay: 2500, result: 'pass', text: '✅ VS Code detected' },
+                { id: 'docker-status', delay: 3000, result: 'pass', text: '✅ Docker available' }
+            ];
+
+            checks.forEach(check => {
+                setTimeout(() => {
+                    const element = document.getElementById(check.id);
+                    element.textContent = check.text;
+                    element.className = `check-status check-${check.result}`;
+                }, check.delay);
+            });
+
+            // Update first step as completed after checks
+            setTimeout(() => {
+                document.getElementById('step-1').classList.add('completed');
+            }, 3500);
+        }
+
+        // Simulate command execution
+        function simulateCommand(command) {
+            const terminal = document.getElementById('demo-terminal');
+            const commands = {
+                clone: [
+                    '$ git clone git@github.com:risinggen/risinggen.git',
+                    'Cloning into \'risinggen\'...',
+                    'remote: Enumerating objects: 1247, done.',
+                    'remote: Counting objects: 100% (1247/1247), done.',
+                    'Resolving deltas: 100% (856/856), done.',
+                    '$ cd risinggen'
+                ],
+                install: [
+                    '$ npm install',
+                    'npm WARN deprecated package@1.0.0',
+                    'added 1,543 packages from 892 contributors',
+                    'audited 1,543 packages in 12.34s',
+                    'found 0 vulnerabilities',
+                    '✅ Dependencies installed successfully'
+                ],
+                mongodb: [
+                    '$ brew services start mongodb-community',
+                    'Successfully started `mongodb-community`',
+                    '$ mongo --eval "db.adminCommand(\'ismaster\')"',
+                    'MongoDB server version: 5.0.8',
+                    '✅ MongoDB is running'
+                ],
+                postgresql: [
+                    '$ createdb risinggen_events',
+                    '$ createuser risinggen_dev -P',
+                    'Enter password for new role: ********',
+                    '✅ PostgreSQL setup complete'
+                ],
+                env: [
+                    '$ cp .env.example .env.local',
+                    '$ nano .env.local',
+                    '✅ Environment variables configured'
+                ],
+                dev: [
+                    '$ npm run dev:all',
+                    'Starting development servers...',
+                    '🚀 Frontend: http://localhost:3000',
+                    '🚀 Backend: http://localhost:3001',
+                    '🚀 Database services started',
+                    '✅ Development environment ready!'
+                ]
+            };
+
+            if (commands[command]) {
+                terminal.innerHTML = '<div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-command">Running ' + command + ' command...</span></div>';
+
+                commands[command].forEach((line, index) => {
+                    setTimeout(() => {
+                        const lineDiv = document.createElement('div');
+                        lineDiv.className = 'terminal-line';
+
+                        if (line.startsWith('$')) {
+                            lineDiv.innerHTML = '<span class="terminal-prompt">' + line.substring(0, 1) + '</span> <span class="terminal-command">' + line.substring(2) + '</span>';
+                        } else if (line.startsWith('✅')) {
+                            lineDiv.innerHTML = '<span style="color: #22c55e;">' + line + '</span>';
+                        } else {
+                            lineDiv.innerHTML = '<span class="terminal-output">' + line + '</span>';
+                        }
+
+                        terminal.appendChild(lineDiv);
+                        terminal.scrollTop = terminal.scrollHeight;
+                    }, index * 800);
+                });
+
+                // Update progress step
+                setTimeout(() => {
+                    const stepMap = {
+                        clone: 'step-2',
+                        install: 'step-2',
+                        mongodb: 'step-3',
+                        postgresql: 'step-3',
+                        env: 'step-4',
+                        dev: 'step-5'
+                    };
+
+                    const stepElement = document.getElementById(stepMap[command]);
+                    if (stepElement) {
+                        stepElement.classList.add('completed');
+                    }
+
+                    // Update card status
+                    const statusMap = {
+                        clone: 'clone-status',
+                        install: 'install-status',
+                        mongodb: 'mongodb-status',
+                        postgresql: 'postgresql-status',
+                        env: 'env-status',
+                        dev: 'dev-status'
+                    };
+
+                    const statusElement = document.getElementById(statusMap[command]);
+                    if (statusElement) {
+                        statusElement.textContent = 'Done';
+                        statusElement.className = 'card-status status-done';
+                    }
+                }, commands[command].length * 800);
+            }
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(button) {
+            const codeBlock = button.parentNode.textContent.replace('Copy', '').trim();
+            navigator.clipboard.writeText(codeBlock).then(function () {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Progress step interaction
+        document.querySelectorAll('.progress-step').forEach(step => {
+            step.addEventListener('click', function () {
+                // Remove active class from all steps
+                document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active'));
+                // Add active class to clicked step
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll to sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-check prerequisites on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(checkPrerequisites, 1000);
+        });
+    </script>
+</body>
+
+</html>

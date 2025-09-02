@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen Analytics & Metrics - Interactive Documentation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard-preview {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #4a5568;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-change {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .metric-change.positive {
+            color: #22c55e;
+        }
+
+        .metric-change.negative {
+            color: #ef4444;
+        }
+
+        .metric-change.neutral {
+            color: #6b7280;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .sidebar h3 {
+            color: #1a365d;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content {
+            margin-left: 290px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul,
+        ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .demo-controls {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-item label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .control-item select,
+        .control-item input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+        }
+
+        .demo-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .kpi-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .kpi-engagement {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .kpi-conversion {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .kpi-retention {
+            background: #fef7e0;
+            color: #f57c00;
+        }
+
+        .kpi-growth {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .control-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 RisingGen Analytics & Metrics</h1>
+            <p>Comprehensive analytics implementation guide with KPIs, dashboards, and real-time data tracking</p>
+            <div class="breadcrumb">
+                <a href="../index.html">← Back to Documentation Hub</a>
+            </div>
+        </div>
+
+        <div class="dashboard-preview">
+            <h2 style="color: #1a365d; margin-bottom: 20px; border: none; font-size: 1.5rem;">📈 Live Analytics
+                Dashboard Preview</h2>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">1,247</div>
+                    <div class="metric-label">Active Users</div>
+                    <div class="metric-change positive">+12.5% vs last month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">34</div>
+                    <div class="metric-label">Events This Month</div>
+                    <div class="metric-change positive">+8.3% vs last month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">892</div>
+                    <div class="metric-label">Event Registrations</div>
+                    <div class="metric-change positive">+23.7% vs last month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4,563</div>
+                    <div class="metric-label">Service Hours</div>
+                    <div class="metric-change positive">+15.2% vs last month</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">User Engagement Over Time</div>
+                <canvas id="engagementChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>📊 Analytics Guide</h3>
+            <a href="#overview" class="nav-item">Overview</a>
+            <a href="#kpis" class="nav-item">Key Performance Indicators</a>
+            <a href="#tracking" class="nav-item">Event Tracking</a>
+            <a href="#dashboard" class="nav-item">Dashboard Implementation</a>
+            <a href="#collection" class="nav-item">Data Collection</a>
+            <a href="#reporting" class="nav-item">Reporting</a>
+            <a href="#privacy" class="nav-item">Privacy & GDPR</a>
+            <a href="#performance" class="nav-item">Performance</a>
+            <a href="#visualization" class="nav-item">Visualization</a>
+            <a href="#best-practices" class="nav-item">Best Practices</a>
+        </div>
+
+        <div class="content">
+            <section id="overview">
+                <h2>📋 Analytics Overview</h2>
+                <p>Analytics in RisingGen serve several key purposes for measuring engagement, understanding user
+                    behavior, and supporting data-driven decisions across the European YSA community.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Engagement Measurement</div>
+                        <div class="feature-description">Track user interactions, content consumption, and platform
+                            engagement metrics to understand community activity patterns.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Behavioral Insights</div>
+                        <div class="feature-description">Analyze user preferences, navigation patterns, and feature
+                            adoption to optimize user experience.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <div class="feature-title">Performance Optimization</div>
+                        <div class="feature-description">Identify opportunities for improvement through data-driven
+                            insights and A/B testing results.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-title">Decision Support</div>
+                        <div class="feature-description">Provide stakeholders with comprehensive reports and dashboards
+                            for informed decision-making.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="kpis">
+                <h2>🎯 Key Performance Indicators (KPIs)</h2>
+
+                <h3>Primary KPIs by Category</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>KPI</th>
+                                <th>Description</th>
+                                <th>Target</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="kpi-badge kpi-engagement">Engagement</span></td>
+                                <td>Daily Active Users (DAU)</td>
+                                <td>Unique users who engage with platform daily</td>
+                                <td>15% of total users</td>
+                            </tr>
+                            <tr>
+                                <td><span class="kpi-badge kpi-engagement">Engagement</span></td>
+                                <td>Session Duration</td>
+                                <td>Average time spent per user session</td>
+                                <td>8+ minutes</td>
+                            </tr>
+                            <tr>
+                                <td><span class="kpi-badge kpi-conversion">Conversion</span></td>
+                                <td>Event Registration Rate</td>
+                                <td>% of users who register after viewing event</td>
+                                <td>25%+</td>
+                            </tr>
+                            <tr>
+                                <td><span class="kpi-badge kpi-conversion">Conversion</span></td>
+                                <td>Profile Completion Rate</td>
+                                <td>% of users who complete their profile</td>
+                                <td>80%+</td>
+                            </tr>
+                            <tr>
+                                <td><span class="kpi-badge kpi-retention">Retention</span></td>
+                                <td>Monthly Retention Rate</td>
+                                <td>% of users returning within 30 days</td>
+                                <td>60%+</td>
+                            </tr>
+                            <tr>
+                                <td><span class="kpi-badge kpi-growth">Growth</span></td>
+                                <td>User Acquisition Rate</td>
+                                <td>New users acquired per month</td>
+                                <td>100+ per month</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Event-Specific Metrics</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Example of tracking event success metrics
+                    function calculateEventSuccessMetrics(eventId) {
+                    return db.transaction(async (tx) => {
+                    // Registration conversion rate
+                    const viewsResult = await tx.query(
+                    "SELECT COUNT(DISTINCT user_id) AS total_views FROM event_views WHERE event_id = ?",
+                    [eventId]
+                    );
+
+                    const registrationsResult = await tx.query(
+                    'SELECT COUNT(*) AS total_registrations FROM event_registrations WHERE event_id = ? AND status =
+                    "confirmed"',
+                    [eventId]
+                    );
+
+                    const totalViews = viewsResult[0].total_views;
+                    const totalRegistrations = registrationsResult[0].total_registrations;
+                    const conversionRate = totalViews > 0 ? (totalRegistrations / totalViews) * 100 : 0;
+
+                    // Attendance rate
+                    const checkedInResult = await tx.query(
+                    'SELECT COUNT(*) AS checked_in FROM event_attendance WHERE event_id = ? AND status = "checked_in"',
+                    [eventId]
+                    );
+
+                    const checkedIn = checkedInResult[0].checked_in;
+                    const attendanceRate = totalRegistrations > 0 ? (checkedIn / totalRegistrations) * 100 : 0;
+
+                    return {
+                    eventId,
+                    metrics: {
+                    views: totalViews,
+                    registrations: totalRegistrations,
+                    conversionRate: conversionRate.toFixed(1) + "%",
+                    checkedIn,
+                    attendanceRate: attendanceRate.toFixed(1) + "%"
+                    },
+                    };
+                    });
+                    }
+                </div>
+            </section>
+
+            <section id="tracking">
+                <h2>🔍 Event Tracking Implementation</h2>
+
+                <h3>User Engagement Tracking</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Example of tracking user engagement metrics
+                    function trackUserEngagement(userId, actionType, metadata = {}) {
+                    analytics.track({
+                    userId: userId,
+                    event: "user_engagement",
+                    properties: {
+                    action: actionType, // e.g., 'profile_view', 'content_share', 'comment'
+                    timestamp: new Date().toISOString(),
+                    sessionId: getCurrentSessionId(),
+                    ...metadata,
+                    },
+                    });
+                    }
+
+                    // Usage examples
+                    trackUserEngagement("user123", "event_view", { eventId: "event456" });
+                    trackUserEngagement("user123", "profile_update", {
+                    fieldsUpdated: ["bio", "interests"],
+                    });
+                    trackUserEngagement("user123", "content_share", {
+                    contentId: "post789",
+                    platform: "facebook",
+                    });
+                </div>
+
+                <h3>Google Analytics 4 Integration</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Google Analytics 4 integration for RisingGen
+                    import { getAnalytics, logEvent } from "firebase/analytics";
+
+                    const analytics = getAnalytics(app);
+
+                    // Custom RisingGen events
+                    export function trackEventRegistration(eventId, eventName, registrationType) {
+                    logEvent(analytics, "event_registration", {
+                    event_id: eventId,
+                    event_name: eventName,
+                    registration_type: registrationType,
+                    });
+                    }
+
+                    export function trackContentEngagement(contentId, contentType, action) {
+                    logEvent(analytics, "content_engagement", {
+                    content_id: contentId,
+                    content_type: contentType, // 'article', 'video', 'devotional', etc.
+                    action: action, // 'view', 'share', 'like', 'comment', etc.
+                    });
+                    }
+
+                    export function trackServiceParticipation(serviceId, serviceName, role) {
+                    logEvent(analytics, "service_participation", {
+                    service_id: serviceId,
+                    service_name: serviceName,
+                    participation_role: role, // 'organizer', 'volunteer', 'participant', etc.
+                    });
+                    }
+                </div>
+            </section>
+
+            <section id="dashboard">
+                <h2>📊 Dashboard Implementation</h2>
+
+                <h3>Interactive Analytics Dashboard</h3>
+                <div class="interactive-demo">
+                    <h3>🎮 Interactive Dashboard Demo</h3>
+                    <p>Explore different metrics and time ranges to see how analytics data can be visualized</p>
+
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <div class="control-item">
+                                <label for="metricSelect">Select Metric:</label>
+                                <select id="metricSelect">
+                                    <option value="users">User Growth</option>
+                                    <option value="events">Event Participation</option>
+                                    <option value="engagement">Content Engagement</option>
+                                    <option value="service">Service Impact</option>
+                                </select>
+                            </div>
+                            <div class="control-item">
+                                <label for="timeRange">Time Range:</label>
+                                <select id="timeRange">
+                                    <option value="7d">Last 7 Days</option>
+                                    <option value="30d">Last 30 Days</option>
+                                    <option value="90d">Last 90 Days</option>
+                                    <option value="1y">Last Year</option>
+                                </select>
+                            </div>
+                            <div class="control-item">
+                                <label for="countryFilter">Country Filter:</label>
+                                <select id="countryFilter">
+                                    <option value="all">All Countries</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="IT">Italy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="demo-btn" onclick="updateDashboard()">🔄 Update Dashboard</button>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title" id="chartTitle">User Growth - Last 30 Days</div>
+                        <canvas id="demoChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <h3>React Dashboard Component</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // React component for analytics dashboard
+                    import React, { useState, useEffect } from "react";
+                    import { LineChart, BarChart, PieChart } from "./charts";
+                    import { fetchAnalyticsData } from "../api/analytics";
+
+                    export default function AnalyticsDashboard() {
+                    const [dateRange, setDateRange] = useState({
+                    startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+                    endDate: new Date(),
+                    });
+
+                    const [metrics, setMetrics] = useState({
+                    userGrowth: [],
+                    eventParticipation: [],
+                    contentEngagement: [],
+                    serviceImpact: [],
+                    });
+
+                    useEffect(() => {
+                    async function loadData() {
+                    try {
+                    const data = await fetchAnalyticsData(dateRange);
+                    setMetrics(data);
+                    } catch (err) {
+                    console.error("Analytics error:", err);
+                    }
+                    }
+                    loadData();
+                    }, [dateRange]);
+
+                    return (
+                    &lt;div className="analytics-dashboard"&gt;
+                    &lt;h1&gt;RisingGen Analytics Dashboard&lt;/h1&gt;
+                    {/* Dashboard implementation */}
+                    &lt;/div&gt;
+                    );
+                    }
+                </div>
+            </section>
+
+            <section id="collection">
+                <h2>📡 Data Collection and Processing</h2>
+
+                <h3>Client-Side Tracking</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Analytics provider component
+                    export function AnalyticsProvider({ children }) {
+                    const identifyUser = (userId, userProperties = {}) => {
+                    window.analytics_userId = userId;
+                    window.analytics_userProps = userProperties;
+
+                    trackEvent("user_identified", {
+                    user_id: userId,
+                    ...userProperties,
+                    });
+                    };
+
+                    const contextValue = {
+                    trackEvent,
+                    trackPageView,
+                    identifyUser,
+                    };
+
+                    return (
+                    &lt;AnalyticsContext.Provider value={contextValue}&gt;
+                    {children}
+                    &lt;/AnalyticsContext.Provider&gt;
+                    );
+                    }
+
+                    // Custom hook for using analytics
+                    export function useAnalytics() {
+                    return useContext(AnalyticsContext);
+                    }
+                </div>
+
+                <h3>Server-Side Processing</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Cloud Function to process analytics events
+                    exports.processAnalyticsEvent = async (event, context) => {
+                    try {
+                    const eventData = JSON.parse(Buffer.from(event.data, "base64").toString());
+                    const { eventName, timestamp, properties, userId } = eventData;
+
+                    const enrichedData = {
+                    event_name: eventName,
+                    event_timestamp: timestamp,
+                    user_id: userId || "anonymous",
+                    properties: JSON.stringify(properties || {}),
+                    processed_timestamp: new Date().toISOString(),
+                    };
+
+                    // Insert data into BigQuery
+                    const dataset = bigquery.dataset("risinggen_analytics");
+                    const table = dataset.table("events");
+                    await table.insert([enrichedData]);
+
+                    console.log(`Event ${eventName} processed successfully`);
+                    } catch (error) {
+                    console.error("Error processing analytics event:", error);
+                    }
+                    };
+                </div>
+            </section>
+
+            <section id="reporting">
+                <h2>📋 Reporting and Insights</h2>
+
+                <h3>Event Success Reports</h3>
+                <p>Generate comprehensive event success reports with attendance, engagement, and feedback metrics:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Event Performance Comparison</div>
+                    <canvas id="eventChart" width="400" height="200"></canvas>
+                </div>
+
+                <h3>Leadership Activity Reports</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    // Generate leadership report for regional activity
+                    async function generateLeadershipReport(params) {
+                    const { countryCode, startDate, endDate } = params;
+
+                    const currentStatsQuery = `
+                    SELECT
+                    COUNT(DISTINCT u.id) AS active_users,
+                    COUNT(DISTINCT er.id) AS event_registrations,
+                    COUNT(DISTINCT e.id) AS events_held,
+                    IFNULL(SUM(s.hours), 0) AS service_hours
+                    FROM users u
+                    LEFT JOIN event_registrations er ON u.id = er.user_id
+                    LEFT JOIN events e ON e.end_date BETWEEN ? AND ?
+                    LEFT JOIN service_logs s ON u.id = s.user_id
+                    WHERE u.last_activity BETWEEN ? AND ?
+                    `;
+
+                    const stats = await db.query(currentStatsQuery, [
+                    startDate, endDate, startDate, endDate, startDate, endDate
+                    ]);
+
+                    return {
+                    reportType: "leadership_activity",
+                    region: countryCode || "All Countries",
+                    stats: stats[0],
+                    generatedAt: new Date().toISOString(),
+                    };
+                    }
+                </div>
+            </section>
+
+            <section id="privacy">
+                <h2>🔒 Privacy & GDPR Compliance</h2>
+
+                <h3>Privacy-Conscious Analytics</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    class PrivacyAwareAnalytics {
+                    constructor() {
+                    this.consentGiven = false;
+                    this.anonymousId = this.generateAnonymousId();
+                    this.pendingEvents = [];
+                    }
+
+                    setConsent(consentGiven) {
+                    this.consentGiven = consentGiven;
+
+                    if (this.consentGiven && this.pendingEvents.length > 0) {
+                    this.pendingEvents.forEach((event) => this.trackEvent(...event));
+                    this.pendingEvents = [];
+                    }
+                    }
+
+                    trackEvent(eventName, eventParams = {}) {
+                    if (!this.consentGiven) {
+                    if (this.isNonPIIEvent(eventName)) {
+                    this.pendingEvents.push([eventName, eventParams]);
+                    }
+                    return;
+                    }
+
+                    const sanitizedParams = this.sanitizeEventParams(eventParams);
+                    this.sendToAnalytics(eventName, {
+                    ...sanitizedParams,
+                    anonymousId: this.anonymousId,
+                    timestamp: new Date().toISOString(),
+                    });
+                    }
+                    }
+                </div>
+
+                <h3>GDPR Compliance Features</h3>
+                <ul>
+                    <li><strong>Consent Management:</strong> Clear opt-in/opt-out mechanisms</li>
+                    <li><strong>Data Anonymization:</strong> Remove PII from analytics data</li>
+                    <li><strong>Right to be Forgotten:</strong> Delete user data on request</li>
+                    <li><strong>Data Portability:</strong> Export user analytics data</li>
+                    <li><strong>Minimal Data Collection:</strong> Only collect necessary data</li>
+                </ul>
+            </section>
+
+            <section id="performance">
+                <h2>⚡ Performance Optimization</h2>
+
+                <h3>Batch Processing</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    class BatchAnalyticsProcessor {
+                    constructor(options = {}) {
+                    this.events = [];
+                    this.maxBatchSize = options.maxBatchSize || 10;
+                    this.maxWaitTime = options.maxWaitTime || 2000;
+                    this.timer = null;
+                    }
+
+                    addEvent(eventName, eventParams = {}) {
+                    this.events.push({
+                    eventName,
+                    params: eventParams,
+                    timestamp: new Date().toISOString(),
+                    });
+
+                    if (!this.timer) {
+                    this.timer = setTimeout(() => this.sendBatch(), this.maxWaitTime);
+                    }
+
+                    if (this.events.length >= this.maxBatchSize) {
+                    this.sendBatch();
+                    }
+                    }
+
+                    async sendBatch() {
+                    if (this.timer) {
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                    }
+
+                    if (this.events.length === 0) return;
+
+                    const batch = [...this.events];
+                    this.events = [];
+
+                    try {
+                    await fetch("/api/analytics/batch", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ events: batch }),
+                    keepalive: true,
+                    });
+                    } catch (error) {
+                    console.error("Error sending analytics batch:", error);
+                    }
+                    }
+                    }
+                </div>
+            </section>
+
+            <section id="visualization">
+                <h2>📈 Data Visualization</h2>
+
+                <p>Create compelling visualizations to communicate insights effectively:</p>
+
+                <div class="chart-container">
+                    <div class="chart-title">Community Growth Metrics</div>
+                    <canvas id="growthChart" width="400" height="200"></canvas>
+                </div>
+
+                <h3>Visualization Best Practices</h3>
+                <ul>
+                    <li><strong>Clear Titles:</strong> Descriptive chart titles and axis labels</li>
+                    <li><strong>Appropriate Chart Types:</strong> Match visualization to data type</li>
+                    <li><strong>Color Consistency:</strong> Use consistent color schemes across dashboards</li>
+                    <li><strong>Interactive Elements:</strong> Enable filtering and drill-down capabilities</li>
+                    <li><strong>Mobile Responsiveness:</strong> Ensure charts work on all screen sizes</li>
+                </ul>
+            </section>
+
+            <section id="best-practices">
+                <h2>✅ Best Practices</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Define Clear Goals</div>
+                        <div class="feature-description">Establish specific, measurable objectives before implementing
+                            analytics to ensure you're tracking meaningful metrics.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Performance First</div>
+                        <div class="feature-description">Implement analytics without impacting user experience through
+                            asynchronous loading and batch processing.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">Privacy by Design</div>
+                        <div class="feature-description">Build privacy protection into analytics from the ground up with
+                            anonymization and consent management.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Actionable Insights</div>
+                        <div class="feature-description">Focus on metrics that drive decisions and improvements rather
+                            than vanity metrics that don't influence outcomes.</div>
+                    </div>
+                </div>
+
+                <h3>Implementation Checklist</h3>
+                <ul>
+                    <li>✅ Set up comprehensive event tracking</li>
+                    <li>✅ Implement privacy-compliant data collection</li>
+                    <li>✅ Create automated reporting dashboards</li>
+                    <li>✅ Establish performance monitoring</li>
+                    <li>✅ Document tracking implementation</li>
+                    <li>✅ Train team on analytics interpretation</li>
+                    <li>✅ Regular review and optimization cycles</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>📚 Resources and Tools</h2>
+
+                <h3>Recommended Analytics Tools</h3>
+                <ul>
+                    <li><strong>Google Analytics 4:</strong> Comprehensive web and app analytics</li>
+                    <li><strong>Mixpanel:</strong> Advanced event tracking and user behavior analysis</li>
+                    <li><strong>Amplitude:</strong> Product analytics and user journey tracking</li>
+                    <li><strong>BigQuery:</strong> Data warehousing and advanced analytics</li>
+                    <li><strong>Tableau/Power BI:</strong> Advanced data visualization and reporting</li>
+                </ul>
+
+                <h3>Integration Resources</h3>
+                <ul>
+                    <li><a href="../api/reference.html" style="color: #667eea;">API Reference</a> - Analytics endpoints
+                        documentation</li>
+                    <li><a href="../api/authentication.html" style="color: #667eea;">Authentication Guide</a> - API
+                        access setup</li>
+                    <li><a href="../development/getting-started.html" style="color: #667eea;">Development Setup</a> -
+                        Implementation environment</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            // Engagement chart
+            const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+            new Chart(engagementCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Daily Active Users',
+                        data: [180, 195, 220, 235, 268, 290, 315],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Event performance chart
+            const eventCtx = document.getElementById('eventChart').getContext('2d');
+            new Chart(eventCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Conference A', 'Workshop B', 'Service C', 'Social D'],
+                    datasets: [{
+                        label: 'Participants',
+                        data: [120, 85, 95, 150],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Growth metrics chart
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [
+                        {
+                            label: 'New Users',
+                            data: [250, 320, 380, 450],
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)'
+                        },
+                        {
+                            label: 'Active Users',
+                            data: [800, 950, 1100, 1247],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Initialize demo chart
+            updateDemoChart();
+        }
+
+        function updateDashboard() {
+            const metric = document.getElementById('metricSelect').value;
+            const timeRange = document.getElementById('timeRange').value;
+            const country = document.getElementById('countryFilter').value;
+
+            updateDemoChart(metric, timeRange, country);
+        }
+
+        function updateDemoChart(metric = 'users', timeRange = '30d', country = 'all') {
+            const demoCtx = document.getElementById('demoChart').getContext('2d');
+
+            // Clear existing chart
+            if (window.demoChart) {
+                window.demoChart.destroy();
+            }
+
+            // Generate demo data based on selections
+            const data = generateDemoData(metric, timeRange, country);
+
+            // Update chart title
+            const titles = {
+                users: 'User Growth',
+                events: 'Event Participation',
+                engagement: 'Content Engagement',
+                service: 'Service Impact'
+            };
+
+            document.getElementById('chartTitle').textContent =
+                `${titles[metric]} - ${timeRange === '7d' ? 'Last 7 Days' :
+                    timeRange === '30d' ? 'Last 30 Days' :
+                        timeRange === '90d' ? 'Last 90 Days' : 'Last Year'}`;
+
+            window.demoChart = new Chart(demoCtx, {
+                type: metric === 'service' ? 'doughnut' : 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: metric === 'service',
+                            position: 'bottom'
+                        }
+                    },
+                    scales: metric === 'service' ? {} : {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function generateDemoData(metric, timeRange, country) {
+            // Generate realistic demo data based on selections
+            const timeLabels = {
+                '7d': ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                '30d': ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                '90d': ['Month 1', 'Month 2', 'Month 3'],
+                '1y': ['Q1', 'Q2', 'Q3', 'Q4']
+            };
+
+            const baseData = {
+                users: [45, 52, 48, 61, 55, 67, 73],
+                events: [12, 18, 15, 22, 19, 25, 28],
+                engagement: [234, 267, 298, 345, 312, 389, 425],
+                service: [156, 189, 203, 245, 267, 298, 334]
+            };
+
+            if (metric === 'service') {
+                return {
+                    labels: ['Community Service', 'Teaching', 'Leadership', 'Mentoring'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                    }]
+                };
+            }
+
+            return {
+                labels: timeLabels[timeRange] || timeLabels['30d'],
+                datasets: [{
+                    label: metric.charAt(0).toUpperCase() + metric.slice(1),
+                    data: baseData[metric] || baseData.users,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4
+                }]
+            };
+        }
+
+        function copyToClipboard(button) {
+            const codeBlock = button.parentNode.textContent.replace('Copy', '').trim();
+            navigator.clipboard.writeText(codeBlock).then(function () {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Smooth scroll to sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

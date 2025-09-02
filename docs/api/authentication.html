@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen Authentication Guide - Interactive Documentation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-demo {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .auth-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .auth-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border-left: 4px solid #667eea;
+        }
+
+        .auth-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .sidebar h3 {
+            color: #1a365d;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .content {
+            margin-left: 290px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul,
+        ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .inline-code {
+            background: #f7fafc;
+            color: #1a202c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .role-participant {
+            background: #e0f7fa;
+            color: #00695c;
+        }
+
+        .role-organizer {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .role-admin {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .role-leadership {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .endpoint-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .method-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .method-post {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .endpoint-path {
+            font-family: 'JetBrains Mono', monospace;
+            color: #1a202c;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .example-response {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .response-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-200 {
+            background: #22c55e;
+            color: white;
+        }
+
+        .status-400 {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .status-401 {
+            background: #ef4444;
+            color: white;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .demo-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+        }
+
+        .demo-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .security-notice {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ef4444;
+        }
+
+        .security-notice h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .security-notice p {
+            color: #7f1d1d;
+            margin: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .auth-flow {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 RisingGen Authentication Guide</h1>
+            <p>JWT-based authentication with LDS membership verification and role-based access control</p>
+            <div class="breadcrumb">
+                <a href="../index.html">← Back to Documentation Hub</a>
+            </div>
+        </div>
+
+        <div class="auth-demo">
+            <h2 style="color: #1a365d; margin-bottom: 20px; border: none; font-size: 1.5rem;">🔄 Authentication Flow
+                Overview</h2>
+            <div class="auth-flow">
+                <div class="auth-step">
+                    <div class="step-number">1</div>
+                    <h4>Membership Verification</h4>
+                    <p>User provides LDS membership number and password</p>
+                </div>
+                <div class="auth-step">
+                    <div class="step-number">2</div>
+                    <h4>JWT Generation</h4>
+                    <p>Server validates credentials and generates JWT token</p>
+                </div>
+                <div class="auth-step">
+                    <div class="step-number">3</div>
+                    <h4>Role Assignment</h4>
+                    <p>User role determined based on profile and permissions</p>
+                </div>
+                <div class="auth-step">
+                    <div class="step-number">4</div>
+                    <h4>API Access</h4>
+                    <p>Token included in Authorization header for API calls</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h3>🔐 Authentication</h3>
+            <a href="#overview" class="nav-item">Overview</a>
+            <a href="#jwt" class="nav-item">JWT Authentication</a>
+            <a href="#roles" class="nav-item">User Roles</a>
+            <a href="#endpoints" class="nav-item">Auth Endpoints</a>
+            <a href="#examples" class="nav-item">Code Examples</a>
+            <a href="#security" class="nav-item">Security Best Practices</a>
+            <a href="#errors" class="nav-item">Error Handling</a>
+            <a href="#interactive" class="nav-item">Interactive Demo</a>
+        </div>
+
+        <div class="content">
+            <section id="overview">
+                <h2>📋 Authentication Overview</h2>
+                <p>RisingGen uses JWT (JSON Web Token) authentication integrated with Church of Jesus Christ of
+                    Latter-day Saints membership verification. This ensures that only verified YSA members can access
+                    the platform while maintaining secure API access.</p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>LDS Membership Integration:</strong> Verification through membership numbers</li>
+                    <li><strong>JWT Tokens:</strong> Secure, stateless authentication</li>
+                    <li><strong>Role-Based Access:</strong> Different permission levels for users</li>
+                    <li><strong>Multi-Language Support:</strong> Authentication in user's preferred language</li>
+                    <li><strong>Session Management:</strong> Configurable token expiration</li>
+                </ul>
+            </section>
+
+            <section id="jwt">
+                <h2>🎟️ JWT Token Authentication</h2>
+
+                <h3>Login Process</h3>
+                <p>Users authenticate using their LDS membership number and password:</p>
+
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/login</div>
+                    <p>Authenticate user with membership credentials</p>
+                </div>
+
+                <h4>Request Format</h4>
+                <div class="code-block">POST /api/auth/login
+                    Content-Type: application/json
+
+                    {
+                    "membershipNumber": "123456789",
+                    "password": "securePassword123",
+                    "language": "en"
+                    }</div>
+
+                <h4>Success Response</h4>
+                <div class="example-response">
+                    <div class="response-status status-200">200 OK</div>
+                    <div class="code-block">{
+                        "success": true,
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                        "user": {
+                        "id": "user_123",
+                        "name": "John Doe",
+                        "email": "john.doe@example.com",
+                        "preferredLanguage": "en",
+                        "role": "participant",
+                        "ward": "London 1st Ward",
+                        "stake": "London England Stake"
+                        },
+                        "expiresIn": 3600,
+                        "refreshToken": "refresh_abc123..."
+                        }</div>
+                </div>
+
+                <h3>Using JWT Tokens</h3>
+                <p>Include the JWT token in the Authorization header for all API requests:</p>
+                <div class="code-block">Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</div>
+
+                <h3>Token Refresh</h3>
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/refresh</div>
+                    <p>Refresh expired token using refresh token</p>
+                </div>
+
+                <div class="code-block">POST /api/auth/refresh
+                    Content-Type: application/json
+
+                    {
+                    "refreshToken": "refresh_abc123..."
+                    }</div>
+            </section>
+
+            <section id="roles">
+                <h2>👥 User Roles and Permissions</h2>
+
+                <p>The system supports four main user roles with different permission levels:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Permissions</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="role-badge role-participant">participant</span></td>
+                                <td>Register for events, connect with others, view content</td>
+                                <td>Regular YSA member</td>
+                            </tr>
+                            <tr>
+                                <td><span class="role-badge role-organizer">organizer</span></td>
+                                <td>Create events, manage registrations, moderate groups</td>
+                                <td>Event organizer with management permissions</td>
+                            </tr>
+                            <tr>
+                                <td><span class="role-badge role-leadership">leadership</span></td>
+                                <td>Oversee regional activities, access reports, approve events</td>
+                                <td>Area/regional leadership</td>
+                            </tr>
+                            <tr>
+                                <td><span class="role-badge role-admin">admin</span></td>
+                                <td>Full system access, user management, platform configuration</td>
+                                <td>System administrator</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Role Assignment</h3>
+                <p>User roles are automatically assigned based on:</p>
+                <ul>
+                    <li><strong>Church Callings:</strong> Leadership roles reflected in permissions</li>
+                    <li><strong>Event History:</strong> Frequent organizers may receive organizer role</li>
+                    <li><strong>Manual Assignment:</strong> Administrators can manually assign roles</li>
+                    <li><strong>Temporary Permissions:</strong> Event-specific permissions can be granted</li>
+                </ul>
+            </section>
+
+            <section id="endpoints">
+                <h2>🔗 Authentication Endpoints</h2>
+
+                <h3>Login</h3>
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/login</div>
+                    <p>Authenticate user with LDS membership credentials</p>
+                </div>
+
+                <h3>Logout</h3>
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/logout</div>
+                    <p>Invalidate current JWT token</p>
+                </div>
+
+                <h3>Token Verification</h3>
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/verify</div>
+                    <p>Verify if current token is valid and active</p>
+                </div>
+
+                <h3>Password Reset</h3>
+                <div class="endpoint-card">
+                    <span class="method-badge method-post">POST</span>
+                    <div class="endpoint-path">/api/auth/reset-password</div>
+                    <p>Initiate password reset process</p>
+                </div>
+
+                <div class="code-block">POST /api/auth/reset-password
+                    Content-Type: application/json
+
+                    {
+                    "membershipNumber": "123456789",
+                    "email": "user@example.com"
+                    }</div>
+            </section>
+
+            <section id="examples">
+                <h2>💻 Code Examples</h2>
+
+                <h3>JavaScript/Node.js</h3>
+                <div class="code-block">// Login function
+                    async function loginUser(membershipNumber, password, language = 'en') {
+                    try {
+                    const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                    membershipNumber,
+                    password,
+                    language
+                    })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                    // Store token securely
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('refreshToken', data.refreshToken);
+                    return data.user;
+                    } else {
+                    throw new Error(data.error.message);
+                    }
+                    } catch (error) {
+                    console.error('Login failed:', error);
+                    throw error;
+                    }
+                    }
+
+                    // Authenticated API request
+                    async function makeAuthenticatedRequest(url, options = {}) {
+                    const token = localStorage.getItem('authToken');
+
+                    const response = await fetch(url, {
+                    ...options,
+                    headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                    }
+                    });
+
+                    // Handle token expiration
+                    if (response.status === 401) {
+                    await refreshToken();
+                    // Retry request with new token
+                    return makeAuthenticatedRequest(url, options);
+                    }
+
+                    return response;
+                    }</div>
+
+                <h3>Python</h3>
+                <div class="code-block">import requests
+                    import json
+                    from datetime import datetime, timedelta
+
+                    class RisingGenAuth:
+                    def __init__(self, base_url="https://api.risinggen.eu"):
+                    self.base_url = base_url
+                    self.token = None
+                    self.refresh_token = None
+                    self.expires_at = None
+
+                    def login(self, membership_number, password, language="en"):
+                    """Authenticate user with membership credentials"""
+                    url = f"{self.base_url}/api/auth/login"
+                    payload = {
+                    "membershipNumber": membership_number,
+                    "password": password,
+                    "language": language
+                    }
+
+                    response = requests.post(url, json=payload)
+                    data = response.json()
+
+                    if data.get("success"):
+                    self.token = data["token"]
+                    self.refresh_token = data["refreshToken"]
+                    self.expires_at = datetime.now() + timedelta(seconds=data["expiresIn"])
+                    return data["user"]
+                    else:
+                    raise Exception(data.get("error", {}).get("message", "Login failed"))
+
+                    def get_headers(self):
+                    """Get headers with authentication token"""
+                    if not self.token or datetime.now() >= self.expires_at:
+                    self.refresh_access_token()
+
+                    return {
+                    "Authorization": f"Bearer {self.token}",
+                    "Content-Type": "application/json"
+                    }
+
+                    def refresh_access_token(self):
+                    """Refresh the access token"""
+                    if not self.refresh_token:
+                    raise Exception("No refresh token available")
+
+                    url = f"{self.base_url}/api/auth/refresh"
+                    payload = {"refreshToken": self.refresh_token}
+
+                    response = requests.post(url, json=payload)
+                    data = response.json()
+
+                    if data.get("success"):
+                    self.token = data["token"]
+                    self.expires_at = datetime.now() + timedelta(seconds=data["expiresIn"])
+                    else:
+                    raise Exception("Token refresh failed")</div>
+            </section>
+
+            <section id="security">
+                <h2>🔒 Security Best Practices</h2>
+
+                <div class="security-notice">
+                    <h4>⚠️ Security Notice</h4>
+                    <p>Never store JWT tokens in localStorage on production applications. Use secure, httpOnly cookies
+                        or session storage instead.</p>
+                </div>
+
+                <h3>Token Security</h3>
+                <ul>
+                    <li><strong>Secure Storage:</strong> Store tokens in httpOnly cookies or secure session storage</li>
+                    <li><strong>HTTPS Only:</strong> Always use HTTPS for token transmission</li>
+                    <li><strong>Token Expiration:</strong> Implement appropriate token expiration times</li>
+                    <li><strong>Refresh Tokens:</strong> Use refresh tokens to minimize long-lived access tokens</li>
+                    <li><strong>Token Validation:</strong> Always validate tokens on the server side</li>
+                </ul>
+
+                <h3>Password Security</h3>
+                <ul>
+                    <li><strong>Strong Passwords:</strong> Enforce strong password requirements</li>
+                    <li><strong>Rate Limiting:</strong> Implement login attempt rate limiting</li>
+                    <li><strong>Account Lockout:</strong> Lock accounts after multiple failed attempts</li>
+                    <li><strong>Two-Factor Authentication:</strong> Optional 2FA for enhanced security</li>
+                </ul>
+
+                <h3>API Security</h3>
+                <ul>
+                    <li><strong>Rate Limiting:</strong> Implement per-user and global rate limits</li>
+                    <li><strong>Input Validation:</strong> Validate all input parameters</li>
+                    <li><strong>CORS Configuration:</strong> Properly configure CORS policies</li>
+                    <li><strong>Audit Logging:</strong> Log all authentication and authorization events</li>
+                </ul>
+            </section>
+
+            <section id="errors">
+                <h2>⚠️ Error Handling</h2>
+
+                <h3>Authentication Errors</h3>
+
+                <div class="example-response">
+                    <div class="response-status status-401">401 Unauthorized</div>
+                    <div class="code-block">{
+                        "success": false,
+                        "error": {
+                        "code": "INVALID_CREDENTIALS",
+                        "message": "Invalid membership number or password",
+                        "details": {
+                        "attemptCount": 2,
+                        "maxAttempts": 5,
+                        "lockoutTime": null
+                        }
+                        }
+                        }</div>
+                </div>
+
+                <div class="example-response">
+                    <div class="response-status status-401">401 Unauthorized</div>
+                    <div class="code-block">{
+                        "success": false,
+                        "error": {
+                        "code": "TOKEN_EXPIRED",
+                        "message": "JWT token has expired",
+                        "details": {
+                        "expiredAt": "2023-07-15T15:30:45Z",
+                        "canRefresh": true
+                        }
+                        }
+                        }</div>
+                </div>
+
+                <h3>Common Error Codes</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>INVALID_CREDENTIALS</code></td>
+                                <td>Wrong membership number or password</td>
+                                <td>Prompt user to retry</td>
+                            </tr>
+                            <tr>
+                                <td><code>TOKEN_EXPIRED</code></td>
+                                <td>JWT token has expired</td>
+                                <td>Use refresh token</td>
+                            </tr>
+                            <tr>
+                                <td><code>TOKEN_INVALID</code></td>
+                                <td>Malformed or invalid token</td>
+                                <td>Redirect to login</td>
+                            </tr>
+                            <tr>
+                                <td><code>ACCOUNT_LOCKED</code></td>
+                                <td>Too many failed login attempts</td>
+                                <td>Show lockout message</td>
+                            </tr>
+                            <tr>
+                                <td><code>MEMBERSHIP_NOT_FOUND</code></td>
+                                <td>Membership number not found</td>
+                                <td>Verify membership details</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="interactive">
+                <h2>🎮 Interactive Authentication Demo</h2>
+
+                <div class="interactive-demo">
+                    <h3>Try Authentication Flow</h3>
+                    <p>Test the authentication process with demo credentials</p>
+
+                    <div class="demo-form">
+                        <div class="form-group">
+                            <label for="membershipDemo">Membership Number:</label>
+                            <input type="text" id="membershipDemo" placeholder="123456789" value="123456789">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordDemo">Password:</label>
+                            <input type="password" id="passwordDemo" placeholder="Enter password" value="demo123">
+                        </div>
+                        <div class="form-group">
+                            <label for="languageDemo">Preferred Language:</label>
+                            <input type="text" id="languageDemo" placeholder="en" value="en">
+                        </div>
+                        <button class="demo-btn" onclick="testAuthentication()">🔓 Test Login</button>
+                        <button class="demo-btn" onclick="testTokenVerification()">🔍 Verify Token</button>
+                    </div>
+
+                    <div id="demoResult"
+                        style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; display: none;">
+                        <h4>Demo Result:</h4>
+                        <pre id="demoOutput"
+                            style="color: #e2e8f0; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>📚 Additional Resources</h2>
+
+                <ul>
+                    <li><a href="reference.html">API Reference Documentation</a></li>
+                    <li><a href="#" style="color: #667eea;">JWT.io - JWT Token Decoder</a></li>
+                    <li><a href="#" style="color: #667eea;">OAuth 2.0 Specification</a></li>
+                    <li><a href="#" style="color: #667eea;">Security Best Practices Guide</a></li>
+                </ul>
+
+                <h3>Support</h3>
+                <p>For authentication issues or questions:</p>
+                <ul>
+                    <li><strong>Email:</strong> auth-support@risinggen.eu</li>
+                    <li><strong>Documentation:</strong> Comprehensive guides and examples</li>
+                    <li><strong>Community:</strong> Developer forum for peer support</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function testAuthentication() {
+            const membershipNumber = document.getElementById('membershipDemo').value;
+            const password = document.getElementById('passwordDemo').value;
+            const language = document.getElementById('languageDemo').value;
+
+            // Simulate authentication response
+            const demoResponse = {
+                success: true,
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMyIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJwYXJ0aWNpcGFudCIsImlhdCI6MTYyNjM2ODQ0MiwiZXhwIjoxNjI2MzcyMDQyfQ.example",
+                user: {
+                    id: "user_123",
+                    name: "John Doe",
+                    email: "john.doe@example.com",
+                    role: "participant",
+                    preferredLanguage: language
+                },
+                expiresIn: 3600
+            };
+
+            showDemoResult(demoResponse);
+        }
+
+        function testTokenVerification() {
+            // Simulate token verification response
+            const demoResponse = {
+                valid: true,
+                user: {
+                    id: "user_123",
+                    name: "John Doe",
+                    role: "participant"
+                },
+                expiresIn: 2847
+            };
+
+            showDemoResult(demoResponse);
+        }
+
+        function showDemoResult(result) {
+            const resultDiv = document.getElementById('demoResult');
+            const outputPre = document.getElementById('demoOutput');
+
+            outputPre.textContent = JSON.stringify(result, null, 2);
+            resultDiv.style.display = 'block';
+        }
+
+        // Smooth scroll to sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
