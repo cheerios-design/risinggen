@@ -6,6 +6,8 @@ import EventsPage from "./pages/EventsPage";
 import CommunityPage from "./pages/CommunityPage";
 import ContentPage from "./pages/ContentPage";
 import ServicePage from "./pages/ServicePage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 import Footer from "./components/Footer";
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/content" element={<ContentPage />} />
             <Route path="/service" element={<ServicePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </motion.main>
 

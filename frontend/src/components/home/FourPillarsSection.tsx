@@ -1,4 +1,5 @@
 import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useRef } from "react";
 import {
   CalendarIcon,
@@ -198,11 +199,12 @@ const FourPillarsSection = () => {
                     whileTap={{ scale: 0.95 }}
                     className="mt-6"
                   >
-                    <button
-                      className={`w-full bg-gradient-to-r ${pillar.color} text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-glow transition-all duration-300`}
+                    <Link
+                      to={`/${pillar.id}`}
+                      className={`block w-full bg-gradient-to-r ${pillar.color} text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-glow transition-all duration-300 text-center`}
                     >
                       Explore {pillar.title}
-                    </button>
+                    </Link>
                   </motion.div>
                 </div>
               </motion.div>
@@ -225,16 +227,20 @@ const FourPillarsSection = () => {
               Join thousands of young adults across Europe who are already part
               of the RisingGen community.
             </p>
-            <motion.button
+            <motion.div
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 20px 50px rgba(255, 255, 255, 0.2)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-primary-600 px-8 py-4 rounded-full font-bold text-lg shadow-glow hover:bg-blue-50 transition-all duration-300"
             >
-              Get Started Today
-            </motion.button>
+              <Link
+                to="/community"
+                className="bg-white text-primary-600 px-8 py-4 rounded-full font-bold text-lg shadow-glow hover:bg-blue-50 transition-all duration-300"
+              >
+                Get Started Today
+              </Link>
+            </motion.div>
           </div>
         </motion.div>
       </div>

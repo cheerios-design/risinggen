@@ -16,7 +16,6 @@ const HomePage = () => {
     >
       {/* Hero Section */}
       <HeroSection />
-
       {/* Four Pillars Section */}
       <FourPillarsSection />
 

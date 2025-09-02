@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ChevronDownIcon, PlayIcon } from "@heroicons/react/24/outline";
 
 const HeroSection = () => {
@@ -98,25 +99,30 @@ const HeroSection = () => {
             transition={{ duration: 1, ease: "easeOut", delay: 1.2 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
           >
-            <motion.button
+            <motion.div
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 20px 50px rgba(255, 255, 255, 0.3)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-primary-600 px-8 py-4 rounded-full font-bold text-lg shadow-glow-lg hover:bg-blue-50 transition-all duration-300 w-full sm:w-auto"
             >
-              Join Our Community
-            </motion.button>
+              <Link
+                to="/community"
+                className="inline-block bg-white text-primary-600 px-8 py-4 rounded-full font-bold text-lg shadow-glow-lg hover:bg-blue-50 transition-all duration-300 w-full sm:w-auto text-center"
+              >
+                Join Our Community
+              </Link>
+            </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-3 bg-white/10 backdrop-blur-lg border border-white/20 px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300 w-full sm:w-auto"
-            >
-              <PlayIcon className="w-6 h-6" />
-              <span>Watch Our Story</span>
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/about"
+                className="flex items-center justify-center space-x-3 bg-white/10 backdrop-blur-lg border border-white/20 px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300 w-full sm:w-auto"
+              >
+                <PlayIcon className="w-6 h-6" />
+                <span>Watch Our Story</span>
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* Mission Statement */}

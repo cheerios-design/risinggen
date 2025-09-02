@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="relative bg-white/5 backdrop-blur-sm border-t border-white/10 py-16">
@@ -31,60 +33,60 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Community</h4>
             <div className="space-y-2">
-              <a
-                href="#"
+              <Link
+                to="/community"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Join Us
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/events"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Events
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/about"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
-                Locations
-              </a>
-              <a
-                href="#"
+                About
+              </Link>
+              <Link
+                to="/community"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Support
-              </a>
+              </Link>
             </div>
           </div>
 
           <div>
             <h4 className="text-white font-semibold mb-4">Resources</h4>
             <div className="space-y-2">
-              <a
-                href="#"
+              <Link
+                to="/content"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Content
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/service"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Service
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/about"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Leadership
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/contact"
                 className="text-white/70 hover:text-white text-sm block transition-colors"
               >
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
 

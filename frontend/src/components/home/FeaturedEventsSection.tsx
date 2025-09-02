@@ -1,4 +1,5 @@
 import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useRef } from "react";
 import {
   CalendarIcon,
@@ -124,13 +125,17 @@ const FeaturedEventsSection = () => {
                     {event.description}
                   </p>
 
-                  <motion.button
+                  <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`w-full bg-gradient-to-r ${event.color} text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-glow transition-all duration-300`}
                   >
-                    Learn More
-                  </motion.button>
+                    <Link
+                      to="/events"
+                      className={`block w-full bg-gradient-to-r ${event.color} text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-glow transition-all duration-300 text-center`}
+                    >
+                      Learn More
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
@@ -143,13 +148,14 @@ const FeaturedEventsSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-12"
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300"
-          >
-            View All Events
-          </motion.button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              to="/events"
+              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300"
+            >
+              View All Events
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

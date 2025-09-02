@@ -126,7 +126,9 @@ const Navbar = () => {
                     to={item.href}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
                       isActive
-                        ? "bg-white/20 backdrop-blur-md text-white shadow-glow"
+                        ? scrolled
+                          ? "bg-primary-500/20 backdrop-blur-md text-primary-600 shadow-glow"
+                          : "bg-white/20 backdrop-blur-md text-white shadow-glow"
                         : scrolled
                         ? "text-primary-600 hover:bg-primary-50 hover:text-primary-700"
                         : "text-white/90 hover:bg-white/10 hover:text-white"
@@ -142,16 +144,20 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <motion.button
+            <motion.div
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 25px rgba(61, 28, 102, 0.5)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-primary-500 px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-glow-lg transition-all duration-300"
             >
-              Join Community
-            </motion.button>
+              <Link
+                to="/community"
+                className="inline-block bg-white text-primary-500 px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-glow-lg transition-all duration-300"
+              >
+                Join Community
+              </Link>
+            </motion.div>
           </div>
 
           {/* Mobile menu button */}
@@ -184,7 +190,11 @@ const Navbar = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="md:hidden mt-4 pb-4"
             >
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 space-y-2">
+              <div
+                className={`backdrop-blur-lg rounded-2xl p-4 space-y-2 ${
+                  scrolled ? "bg-primary-500/10" : "bg-white/10"
+                }`}
+              >
                 {navigation.map((item, index) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.href;
@@ -200,14 +210,22 @@ const Navbar = () => {
                         to={item.href}
                         className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 ${
                           isActive
-                            ? "bg-white/20 text-white"
+                            ? scrolled
+                              ? "bg-primary-500/20 text-primary-600"
+                              : "bg-white/20 text-white"
+                            : scrolled
+                            ? "text-primary-600 hover:bg-primary-50 hover:text-primary-700"
                             : "text-white/90 hover:bg-white/10 hover:text-white"
                         }`}
                       >
                         <Icon className="w-6 h-6" />
                         <div>
                           <div className="font-medium">{item.name}</div>
-                          <div className="text-sm text-white/70">
+                          <div
+                            className={`text-sm transition-colors duration-300 ${
+                              scrolled ? "text-primary-400" : "text-white/70"
+                            }`}
+                          >
                             {item.description}
                           </div>
                         </div>
@@ -222,9 +240,12 @@ const Navbar = () => {
                   transition={{ delay: navigation.length * 0.1 }}
                   className="pt-2"
                 >
-                  <button className="w-full bg-white text-primary-500 py-3 rounded-xl font-semibold shadow-lg">
+                  <Link
+                    to="/community"
+                    className="block w-full bg-white text-primary-500 py-3 rounded-xl font-semibold shadow-lg text-center"
+                  >
                     Join Community
-                  </button>
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>
