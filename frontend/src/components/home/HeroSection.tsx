@@ -102,7 +102,8 @@ const HeroSection = () => {
             <motion.div
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 20px 50px rgba(255, 255, 255, 0.3)",
+                boxShadow:
+                  "0 0 30px rgba(255, 255, 255, 0.4), 0 0 60px rgba(61, 28, 102, 0.3)",
               }}
               whileTap={{ scale: 0.95 }}
             >
@@ -123,19 +124,6 @@ const HeroSection = () => {
                 <span>Watch Our Story</span>
               </Link>
             </motion.div>
-          </motion.div>
-
-          {/* Mission Statement */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 1.5 }}
-            className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 max-w-2xl mx-auto"
-          >
-            <p className="text-white/80 text-lg font-medium italic">
-              "Connecting hearts, strengthening faith, and building an eternal
-              community of disciples across Europe"
-            </p>
           </motion.div>
         </motion.div>
 
