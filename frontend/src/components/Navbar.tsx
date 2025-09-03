@@ -58,14 +58,43 @@ const Navbar = () => {
     },
   ];
 
+  // Determine if current route needs dark navbar (light background pages)
+  const lightBackgroundRoutes = ['/events', '/auth', '/login', '/register', '/dashboard', '/profile', '/help', '/about', '/contact'];
+  const isLightBackground = lightBackgroundRoutes.includes(location.pathname);
+  
+  // Determine navbar styling based on scroll and background
+  const getNavbarStyle = () => {
+    if (scrolled) {
+      return "bg-white/95 backdrop-blur-lg shadow-lg";
+    } else if (isLightBackground) {
+      return "bg-white/90 backdrop-blur-lg shadow-md";
+    } else {
+      return "bg-transparent";
+    }
+  };
+
+  const getTextColor = (isActive: boolean = false) => {
+    if (scrolled || isLightBackground) {
+      return isActive ? "text-primary-600" : "text-gray-700";
+    } else {
+      return isActive ? "text-white" : "text-white/90";
+    }
+  };
+
+  const getHoverColor = () => {
+    if (scrolled || isLightBackground) {
+      return "hover:text-primary-600 hover:bg-primary-50";
+    } else {
+      return "hover:text-white hover:bg-white/10";
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 backdrop-blur-lg shadow-lg" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${getNavbarStyle()}`}
     >
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -74,13 +103,13 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3">
               <div
                 className={`w-12 h-12 backdrop-blur-md rounded-full flex items-center justify-center shadow-glow transition-all duration-300 ${
-                  scrolled ? "bg-primary-500/20" : "bg-white/20"
+                  (scrolled || isLightBackground) ? "bg-primary-500/20" : "bg-white/20"
                 }`}
               >
                 {/* RisingGen Logo - Using SVG directly */}
                 <svg
                   className={`w-8 h-8 transition-colors duration-300 ${
-                    scrolled ? "text-primary-500" : "text-white"
+                    (scrolled || isLightBackground) ? "text-primary-500" : "text-white"
                   }`}
                   viewBox="0 0 160.91 146.14"
                   fill="currentColor"
@@ -93,15 +122,13 @@ const Navbar = () => {
               </div>
               <div>
                 <div
-                  className={`font-bold text-xl transition-colors duration-300 ${
-                    scrolled ? "text-primary-500" : "text-white"
-                  }`}
+                  className={`font-bold text-xl transition-colors duration-300 ${getTextColor()}`}
                 >
                   RisingGen
                 </div>
                 <div
                   className={`text-xs font-medium transition-colors duration-300 ${
-                    scrolled ? "text-primary-400" : "text-white/80"
+                    scrolled || isLightBackground ? "text-primary-400" : "text-white/80"
                   }`}
                 >
                   Europe
@@ -126,12 +153,10 @@ const Navbar = () => {
                     to={item.href}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
                       isActive
-                        ? scrolled
+                        ? (scrolled || isLightBackground)
                           ? "bg-primary-500/20 backdrop-blur-md text-primary-600 shadow-glow"
                           : "bg-white/20 backdrop-blur-md text-white shadow-glow"
-                        : scrolled
-                        ? "text-primary-600 hover:bg-primary-50 hover:text-primary-700"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        : `${getTextColor()} ${getHoverColor()}`
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -142,8 +167,25 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+            {/* Help Link */}
+            <Link
+              to="/help"
+              className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${getTextColor()} ${getHoverColor()}`}
+            >
+              Help
+            </Link>
+
+            {/* Dashboard Link (for authenticated users) */}
+            <Link
+              to="/dashboard"
+              className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${getTextColor()} ${getHoverColor()}`}
+            >
+              Dashboard
+            </Link>
+
+            {/* Auth Button */}
             <motion.div
               whileHover={{
                 scale: 1.05,
@@ -152,10 +194,10 @@ const Navbar = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/community"
+                to="/auth"
                 className="inline-block bg-white text-primary-500 px-6 py-2 rounded-full font-semibold shadow-lg hover:shadow-glow-lg transition-all duration-300"
               >
-                Join Community
+                Sign In
               </Link>
             </motion.div>
           </div>
@@ -165,11 +207,7 @@ const Navbar = () => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-full transition-colors duration-300 ${
-                scrolled
-                  ? "text-primary-600 hover:bg-primary-50"
-                  : "text-white hover:bg-white/10"
-              }`}
+              className={`p-2 rounded-full transition-colors duration-300 ${getTextColor()} ${getHoverColor()}`}
             >
               {isOpen ? (
                 <XMarkIcon className="w-6 h-6" />
@@ -192,7 +230,7 @@ const Navbar = () => {
             >
               <div
                 className={`backdrop-blur-lg rounded-2xl p-4 space-y-2 ${
-                  scrolled ? "bg-primary-500/10" : "bg-white/10"
+                  scrolled || isLightBackground ? "bg-primary-500/10" : "bg-white/10"
                 }`}
               >
                 {navigation.map((item, index) => {
@@ -210,12 +248,10 @@ const Navbar = () => {
                         to={item.href}
                         className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 ${
                           isActive
-                            ? scrolled
+                            ? (scrolled || isLightBackground)
                               ? "bg-primary-500/20 text-primary-600"
                               : "bg-white/20 text-white"
-                            : scrolled
-                            ? "text-primary-600 hover:bg-primary-50 hover:text-primary-700"
-                            : "text-white/90 hover:bg-white/10 hover:text-white"
+                            : `${getTextColor()} ${getHoverColor()}`
                         }`}
                       >
                         <Icon className="w-6 h-6" />
@@ -223,7 +259,7 @@ const Navbar = () => {
                           <div className="font-medium">{item.name}</div>
                           <div
                             className={`text-sm transition-colors duration-300 ${
-                              scrolled ? "text-primary-400" : "text-white/70"
+                              scrolled || isLightBackground ? "text-primary-400" : "text-white/70"
                             }`}
                           >
                             {item.description}
@@ -238,13 +274,25 @@ const Navbar = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navigation.length * 0.1 }}
-                  className="pt-2"
+                  className="pt-2 space-y-2"
                 >
                   <Link
-                    to="/community"
+                    to="/help"
+                    className={`block p-3 rounded-xl font-medium transition-all duration-300 ${getTextColor()} ${getHoverColor()}`}
+                  >
+                    Help & Support
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    className={`block p-3 rounded-xl font-medium transition-all duration-300 ${getTextColor()} ${getHoverColor()}`}
+                  >
+                    My Dashboard
+                  </Link>
+                  <Link
+                    to="/auth"
                     className="block w-full bg-white text-primary-500 py-3 rounded-xl font-semibold shadow-lg text-center"
                   >
-                    Join Community
+                    Sign In / Register
                   </Link>
                 </motion.div>
               </div>

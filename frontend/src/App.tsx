@@ -8,6 +8,10 @@ import ContentPage from "./pages/ContentPage";
 import ServicePage from "./pages/ServicePage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import AuthPage from "./pages/AuthPage";
+import DashboardPage from "./pages/DashboardPage";
+import ProfilePage from "./pages/ProfilePage";
+import HelpPage from "./pages/HelpPage";
 import Footer from "./components/Footer";
 
 function App() {
@@ -43,6 +47,12 @@ function App() {
             <Route path="/service" element={<ServicePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/register" element={<AuthPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/help" element={<HelpPage />} />
           </Routes>
         </motion.main>
 
