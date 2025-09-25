@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Design System - RisingGen Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+
+        :root {
+            --primary-purple: #3d1c66;
+            --primary-blue: #2D4B9A;
+            --accent-teal: #38b2ac;
+            --accent-green: #38a169;
+            --gray-700: #4a5568;
+            --shadow: 0 10px 25px rgba(61, 28, 102, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-purple), var(--primary-blue));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background: white;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .color-card {
+            text-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-swatch {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .color-info {
+            padding: 1rem;
+            background: white;
+        }
+
+        .typography-demo {
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .font-sample {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-purple);
+        }
+
+        .spacing-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .spacing-box {
+            background: var(--primary-purple);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .component-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .component-example {
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-purple);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-purple);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary-purple);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        .card-example {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .icon-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--primary-purple);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        .info-box {
+            background: #e6f3ff;
+            border: 1px solid #b3d9ff;
+            color: #1a365d;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Visual Design System</h1>
+            <p>Creating a consistent and beautiful experience for YSAs across Europe</p>
+        </div>
+
+        <div class="section">
+            <h2>Design Philosophy</h2>
+            <p>RisingGen's design system is built around the principle of <strong>Unity in Faith</strong>. Just as YSAs
+                across Europe are united in their beliefs while celebrating diverse cultures, our design creates visual
+                harmony while allowing for cultural expressions.</p>
+
+            <div class="info-box">
+                <h4>🎯 Design Goals</h4>
+                <ul>
+                    <li><strong>Inspiring:</strong> Elevate the spiritual experience of gathering</li>
+                    <li><strong>Inclusive:</strong> Welcome YSAs from all European backgrounds</li>
+                    <li><strong>Trustworthy:</strong> Reflect Church standards and values</li>
+                    <li><strong>Accessible:</strong> Usable by everyone, regardless of ability</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Color Palette</h2>
+            <p>Our colors are inspired by the spiritual journey of Young Single Adults - from deep contemplation to
+                bright hope and growth.</p>
+
+            <div class="color-palette">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #3d1c66;">
+                        Deep Purple
+                    </div>
+                    <div class="color-info">
+                        <h4>Primary Purple</h4>
+                        <p>#3d1c66</p>
+                        <small>Represents spiritual depth and commitment</small>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #2D4B9A;">
+                        Royal Blue
+                    </div>
+                    <div class="color-info">
+                        <h4>Primary Blue</h4>
+                        <p>#2D4B9A</p>
+                        <small>Symbolizes trust and reliability</small>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #38b2ac;">
+                        Fresh Teal
+                    </div>
+                    <div class="color-info">
+                        <h4>Accent Teal</h4>
+                        <p>#38b2ac</p>
+                        <small>Represents growth and renewal</small>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #38a169;">
+                        Living Green
+                    </div>
+                    <div class="color-info">
+                        <h4>Accent Green</h4>
+                        <p>#38a169</p>
+                        <small>Symbolizes life and flourishing</small>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #f7fafc; color: #2d3748; border: 1px solid #e2e8f0;">
+                        Pure White
+                    </div>
+                    <div class="color-info">
+                        <h4>Background Light</h4>
+                        <p>#f7fafc</p>
+                        <small>Creates space and clarity</small>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #2d3748;">
+                        Charcoal Gray
+                    </div>
+                    <div class="color-info">
+                        <h4>Text Dark</h4>
+                        <p>#2d3748</p>
+                        <small>Provides strong readability</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Typography</h2>
+            <p>Our typography reflects modern clarity while maintaining warmth and approachability. Like scripture
+                study, our text should be clear, meaningful, and easy to read.</p>
+
+            <div class="typography-demo">
+                <div class="font-sample">
+                    <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">Heading Level 1 - Event
+                        Titles</h1>
+                    <p>Used for main event titles and primary page headers</p>
+                </div>
+
+                <div class="font-sample">
+                    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Heading Level 2 - Section
+                        Headers</h2>
+                    <p>Used for major sections and important announcements</p>
+                </div>
+
+                <div class="font-sample">
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Heading Level 3 -
+                        Subsections</h3>
+                    <p>Used for subsections and smaller groupings</p>
+                </div>
+
+                <div class="font-sample">
+                    <p style="font-size: 1rem; font-weight: 400; margin-bottom: 0.5rem;">Body Text - Event Descriptions
+                    </p>
+                    <p>Used for event descriptions, user content, and general information. Should be highly readable and
+                        comfortable for extended reading.</p>
+                </div>
+
+                <div class="font-sample">
+                    <p style="font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Small Text - Details &
+                        Metadata</p>
+                    <p>Used for dates, times, locations, and supplementary information</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Spacing & Layout</h2>
+            <p>Consistent spacing creates visual rhythm and helps users understand relationships between elements. Think
+                of it as the "white space" that helps content breathe.</p>
+
+            <div class="spacing-demo">
+                <div class="spacing-box" style="padding: 0.5rem;">
+                    Tight
+                    <div style="font-size: 0.75rem; opacity: 0.8;">8px spacing</div>
+                </div>
+                <div class="spacing-box" style="padding: 1rem;">
+                    Comfortable
+                    <div style="font-size: 0.75rem; opacity: 0.8;">16px spacing</div>
+                </div>
+                <div class="spacing-box" style="padding: 1.5rem;">
+                    Relaxed
+                    <div style="font-size: 0.75rem; opacity: 0.8;">24px spacing</div>
+                </div>
+                <div class="spacing-box" style="padding: 2rem;">
+                    Spacious
+                    <div style="font-size: 0.75rem; opacity: 0.8;">32px spacing</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Component Examples</h2>
+            <p>These are the building blocks that create consistent experiences throughout RisingGen.</p>
+
+            <div class="component-showcase">
+                <div class="component-example">
+                    <h4>Buttons</h4>
+                    <button class="btn-primary">Join Event</button>
+                    <button class="btn-secondary">Learn More</button>
+                    <p><small>Primary for main actions, secondary for supporting actions</small></p>
+                </div>
+
+                <div class="component-example">
+                    <h4>Event Cards</h4>
+                    <div class="card-example">
+                        <h5 style="color: var(--primary-purple); margin-bottom: 0.5rem;">YSA Temple Night</h5>
+                        <p style="color: var(--gray-700); margin-bottom: 1rem;">Join us for an inspiring evening at the
+                            temple.</p>
+                        <div style="font-size: 0.875rem; color: var(--gray-700);">📅 Saturday, 7:00 PM</div>
+                    </div>
+                </div>
+
+                <div class="component-example">
+                    <h4>Navigation Elements</h4>
+                    <div style="background: var(--primary-purple); padding: 1rem; border-radius: 8px; color: white;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-weight: 600;">RisingGen</div>
+                            <div style="font-size: 0.875rem;">Events • Community • Profile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-example">
+                    <h4>Form Elements</h4>
+                    <div style="text-align: left;">
+                        <input type="text" placeholder="Event Title"
+                            style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.5rem;">
+                        <select style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;">
+                            <option>Select Event Type</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Iconography</h2>
+            <p>Icons help users quickly understand functionality and create visual interest. We use simple, recognizable
+                symbols that work across cultures.</p>
+
+            <div class="icon-grid">
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+                    <div style="font-size: 0.875rem;">Calendar</div>
+                </div>
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                    <div style="font-size: 0.875rem;">Community</div>
+                </div>
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                    <div style="font-size: 0.875rem;">Goals</div>
+                </div>
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+                    <div style="font-size: 0.875rem;">Messages</div>
+                </div>
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚙️</div>
+                    <div style="font-size: 0.875rem;">Settings</div>
+                </div>
+                <div class="icon-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
+                    <div style="font-size: 0.875rem;">Home</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Accessibility Standards</h2>
+            <p>Following Church principles of inclusion, our design ensures everyone can participate fully in the YSA
+                community.</p>
+
+            <div class="info-box">
+                <h4>♿ Accessibility Features</h4>
+                <ul>
+                    <li><strong>Color Contrast:</strong> All text meets WCAG AA standards (4.5:1 ratio minimum)</li>
+                    <li><strong>Font Size:</strong> Minimum 16px for body text, scalable up to 200%</li>
+                    <li><strong>Keyboard Navigation:</strong> All interactive elements accessible via keyboard</li>
+                    <li><strong>Screen Readers:</strong> Proper semantic markup and alternative text</li>
+                    <li><strong>Focus Indicators:</strong> Clear visual focus states for navigation</li>
+                    <li><strong>Language Support:</strong> Compatible with European language variations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Implementation Guidelines</h2>
+
+            <div class="component-showcase">
+                <div class="component-example">
+                    <h4>🎨 Design Consistency</h4>
+                    <p>Use components exactly as specified to maintain visual unity across all features</p>
+                </div>
+
+                <div class="component-example">
+                    <h4>📱 Responsive Design</h4>
+                    <p>All elements adapt beautifully from mobile phones to desktop computers</p>
+                </div>
+
+                <div class="component-example">
+                    <h4>🌍 Cultural Sensitivity</h4>
+                    <p>Design choices respect diverse European cultures while maintaining Church standards</p>
+                </div>
+
+                <div class="component-example">
+                    <h4>⚡ Performance</h4>
+                    <p>Optimized graphics and efficient code ensure fast loading across all devices</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Brand Guidelines</h2>
+            <p>RisingGen's visual identity reflects the uplifting, inspiring nature of the YSA experience while
+                maintaining Church standards.</p>
+
+            <div class="info-box">
+                <h4>🎯 Visual Principles</h4>
+                <ul>
+                    <li><strong>Uplifting:</strong> Colors and imagery inspire hope and spiritual growth</li>
+                    <li><strong>Modern:</strong> Contemporary design that appeals to young adults</li>
+                    <li><strong>Clean:</strong> Uncluttered layouts that promote focus and peace</li>
+                    <li><strong>Trustworthy:</strong> Professional appearance that reflects Church values</li>
+                    <li><strong>Inclusive:</strong> Welcoming to YSAs from all backgrounds</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="../presentations/church-approval-presentation.html" class="back-link">← Back to Presentation</a>
+    </div>
+</body>
+
+</html>

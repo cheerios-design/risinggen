@@ -59,9 +59,19 @@ const Navbar = () => {
   ];
 
   // Determine if current route needs dark navbar (light background pages)
-  const lightBackgroundRoutes = ['/events', '/auth', '/login', '/register', '/dashboard', '/profile', '/help', '/about', '/contact'];
+  const lightBackgroundRoutes = [
+    "/events",
+    "/auth",
+    "/login",
+    "/register",
+    "/dashboard",
+    "/profile",
+    "/help",
+    "/about",
+    "/contact",
+  ];
   const isLightBackground = lightBackgroundRoutes.includes(location.pathname);
-  
+
   // Determine navbar styling based on scroll and background
   const getNavbarStyle = () => {
     if (scrolled) {
@@ -103,13 +113,17 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3">
               <div
                 className={`w-12 h-12 backdrop-blur-md rounded-full flex items-center justify-center shadow-glow transition-all duration-300 ${
-                  (scrolled || isLightBackground) ? "bg-primary-500/20" : "bg-white/20"
+                  scrolled || isLightBackground
+                    ? "bg-primary-500/20"
+                    : "bg-white/20"
                 }`}
               >
                 {/* RisingGen Logo - Using SVG directly */}
                 <svg
                   className={`w-8 h-8 transition-colors duration-300 ${
-                    (scrolled || isLightBackground) ? "text-primary-500" : "text-white"
+                    scrolled || isLightBackground
+                      ? "text-primary-500"
+                      : "text-white"
                   }`}
                   viewBox="0 0 160.91 146.14"
                   fill="currentColor"
@@ -128,7 +142,9 @@ const Navbar = () => {
                 </div>
                 <div
                   className={`text-xs font-medium transition-colors duration-300 ${
-                    scrolled || isLightBackground ? "text-primary-400" : "text-white/80"
+                    scrolled || isLightBackground
+                      ? "text-primary-400"
+                      : "text-white/80"
                   }`}
                 >
                   Europe
@@ -153,7 +169,7 @@ const Navbar = () => {
                     to={item.href}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
                       isActive
-                        ? (scrolled || isLightBackground)
+                        ? scrolled || isLightBackground
                           ? "bg-primary-500/20 backdrop-blur-md text-primary-600 shadow-glow"
                           : "bg-white/20 backdrop-blur-md text-white shadow-glow"
                         : `${getTextColor()} ${getHoverColor()}`
@@ -230,7 +246,9 @@ const Navbar = () => {
             >
               <div
                 className={`backdrop-blur-lg rounded-2xl p-4 space-y-2 ${
-                  scrolled || isLightBackground ? "bg-primary-500/10" : "bg-white/10"
+                  scrolled || isLightBackground
+                    ? "bg-primary-500/10"
+                    : "bg-white/10"
                 }`}
               >
                 {navigation.map((item, index) => {
@@ -248,7 +266,7 @@ const Navbar = () => {
                         to={item.href}
                         className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 ${
                           isActive
-                            ? (scrolled || isLightBackground)
+                            ? scrolled || isLightBackground
                               ? "bg-primary-500/20 text-primary-600"
                               : "bg-white/20 text-white"
                             : `${getTextColor()} ${getHoverColor()}`
@@ -259,7 +277,9 @@ const Navbar = () => {
                           <div className="font-medium">{item.name}</div>
                           <div
                             className={`text-sm transition-colors duration-300 ${
-                              scrolled || isLightBackground ? "text-primary-400" : "text-white/70"
+                              scrolled || isLightBackground
+                                ? "text-primary-400"
+                                : "text-white/70"
                             }`}
                           >
                             {item.description}
