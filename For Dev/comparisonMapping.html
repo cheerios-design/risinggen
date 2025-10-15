@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>RisingGen – Comparison Mapping (Whova • Stova • Cvent ➜ RisingGen)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root {
+            --rg-purple-500: #3d1c66;
+            --rg-purple-600: #2D4B9A;
+            --rg-purple-700: #1A2A56;
+            --rg-accent: #f97316;
+            --rg-green: #15803d;
+            --rg-bg: #f7f8fb;
+            --rg-border: #e2e8f0;
+            --radius: 14px;
+            --limitation: #fef2f2;
+            --rg-cap: #ecfdf5;
+            --note: #ede9fe;
+            --neutral-chip: #374151;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", system-ui, sans-serif;
+            background: linear-gradient(135deg, #3d1c66, #2D4B9A, #1A2A56);
+            color: #1f2937;
+            line-height: 1.5;
+        }
+
+        header {
+            padding: 2.5rem 1.5rem 1rem;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0 0 .75rem;
+            font-size: 2.15rem;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+
+        header p {
+            max-width: 950px;
+            margin: .4rem auto;
+            font-size: 1.02rem;
+            opacity: .95;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+            font-size: .65rem;
+            margin: 1rem auto 0;
+            justify-content: center;
+        }
+
+        .legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            background: #374151;
+            color: #fff;
+            border: 1px solid #374151;
+            padding: .45rem .7rem;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+        .legend b {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .toolbar {
+            background: #fff;
+            margin: 0 auto 1.4rem;
+            width: clamp(300px, 95%, 1500px);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 24px -6px rgba(0, 0, 0, .15);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .toolbar input {
+            flex: 1 1 260px;
+            padding: .75rem 1rem;
+            border: 1px solid var(--rg-border);
+            border-radius: 10px;
+            font-size: .95rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+        }
+
+        .filters button {
+            background: #fff;
+            border: 1px solid var(--rg-border);
+            padding: .55rem .9rem;
+            border-radius: 30px;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: .25s;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+
+        .filters button.active {
+            background: var(--rg-purple-600);
+            color: #fff;
+            border-color: var(--rg-purple-600);
+            box-shadow: 0 0 0 3px rgba(61, 28, 102, .25);
+        }
+
+        .filters button:hover {
+            background: var(--rg-purple-500);
+            color: #fff;
+        }
+
+        main {
+            width: clamp(300px, 95%, 1500px);
+            margin: 0 auto 5rem;
+        }
+
+        section.category {
+            margin: 2.75rem 0;
+        }
+
+        section.category h2 {
+            color: #fff;
+            font-size: 1.65rem;
+            font-weight: 700;
+            margin: 0 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+        }
+
+        section.category h2 span.badge {
+            background: linear-gradient(135deg, #3d1c66, #2D4B9A);
+            padding: .45rem 1rem;
+            font-size: .78rem;
+            font-weight: 600;
+            border-radius: 30px;
+            letter-spacing: .55px;
+            color: #fff;
+        }
+
+        .mapping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+            gap: 1.3rem;
+        }
+
+        .row {
+            background: #fff;
+            border: 1px solid var(--rg-border);
+            border-radius: var(--radius);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+            box-shadow: 0 4px 22px -4px rgba(0, 0, 0, .12);
+        }
+
+        .row:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(130deg, rgba(61, 28, 102, .09), rgba(45, 75, 154, .07) 45%, rgba(26, 42, 86, .04));
+            pointer-events: none;
+        }
+
+        .col {
+            padding: 1.05rem 1.05rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: .45rem;
+        }
+
+        .col.left {
+            border-right: 1px dashed var(--rg-border);
+            background: linear-gradient(180deg, #fff, #f9fafc 70%);
+        }
+
+        .col.right {
+            background: linear-gradient(180deg, #fff, #fdfdfd 70%);
+        }
+
+        h3.limitation-title {
+            margin: .05rem 0 .4rem;
+            font-size: 1.04rem;
+            font-weight: 700;
+            color: var(--rg-purple-700);
+        }
+
+        h3.rg-title {
+            margin: .05rem 0 .45rem;
+            font-size: 1.04rem;
+            font-weight: 700;
+            color: var(--rg-purple-600);
+        }
+
+        .pill {
+            display: inline-block;
+            padding: .38rem .65rem;
+            font-size: .63rem;
+            font-weight: 600;
+            letter-spacing: .5px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            background: #ede9fe;
+            color: #4c1d95;
+            margin-right: .3rem;
+        }
+
+        .pill.limit {
+            background: var(--limitation);
+            color: #991b1b;
+        }
+
+        .pill.rg {
+            background: var(--rg-cap);
+            color: #065f46;
+        }
+
+        .pill.scope {
+            background: #eff6ff;
+            color: #1e3a8a;
+        }
+
+        ul.meta,
+        ul.solution-points {
+            list-style: disc;
+            margin: .25rem 0 .3rem 1.05rem;
+            padding: 0;
+            font-size: .78rem;
+            line-height: 1.2rem;
+        }
+
+        ul.meta li strong,
+        ul.solution-points li strong {
+            font-weight: 600;
+        }
+
+        .divider-label {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: .22rem .7rem;
+            font-size: .55rem;
+            letter-spacing: .75px;
+            font-weight: 700;
+            border: 1px solid var(--rg-border);
+            border-radius: 30px;
+            color: var(--rg-purple-600);
+            text-transform: uppercase;
+        }
+
+        .impact-note {
+            margin-top: auto;
+            font-size: .6rem;
+            letter-spacing: .45px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--rg-purple-500);
+            opacity: .9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.75rem 1rem 4rem;
+            font-size: .7rem;
+            color: #e5e7eb;
+        }
+
+        .note-block {
+            background: rgba(255, 255, 255, .18);
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, .35);
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            margin: 1.2rem auto 0;
+            max-width: 950px;
+            color: #f1f5f9;
+            font-size: .75rem;
+            line-height: 1.15rem;
+        }
+
+        /* Parity Table */
+        .parity-wrapper {
+            width: clamp(300px, 95%, 1500px);
+            margin: 2rem auto 2.2rem;
+            background: #fff;
+            border: 1px solid var(--rg-border);
+            border-radius: 18px;
+            box-shadow: 0 4px 26px -6px rgba(0, 0, 0, .18);
+            overflow: hidden;
+        }
+
+        .parity-header {
+            background: linear-gradient(135deg, #3d1c66, #2D4B9A);
+            color: #fff;
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: .35rem;
+        }
+
+        .parity-header h2 {
+            margin: 0;
+            font-size: 1.05rem;
+            letter-spacing: .5px;
+            font-weight: 700;
+        }
+
+        .parity-legend {
+            font-size: .6rem;
+            opacity: .9;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+        }
+
+        .parity-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            background: #374151;
+            color: #fff;
+            padding: .35rem .55rem;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: .4px;
+        }
+
+        .parity-scroll {
+            overflow: auto;
+        }
+
+        table.parity {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            min-width: 1100px;
+            font-size: .7rem;
+        }
+
+        table.parity th,
+        table.parity td {
+            padding: .55rem .6rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        table.parity th {
+            background: #f8fafc;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: #374151;
+            font-weight: 700;
+        }
+
+        table.parity tbody tr:nth-child(even) {
+            background: #fdfdfd;
+        }
+
+        table.parity tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        .feat-col {
+            font-weight: 600;
+            color: #1A2A56;
+        }
+
+        .badge-icon {
+            font-weight: 700;
+        }
+
+        .yes {
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        .partial {
+            color: #b45309;
+            font-weight: 600;
+        }
+
+        .no {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .distinct {
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            color: #065f46;
+            font-weight: 600;
+            padding: .25rem .45rem;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .parity-foot {
+            padding: .6rem .9rem;
+            background: #f8fafc;
+            font-size: .6rem;
+            line-height: 1.1rem;
+            color: #374151;
+        }
+
+        @media (max-width:1200px) {
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .col.left {
+                border-right: none;
+                border-bottom: 1px dashed var(--rg-border);
+            }
+
+            .divider-label {
+                left: 12px;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Commercial Platform Limitations → RisingGen Distinctives</h1>
+        <p>This comparison highlights gaps commonly experienced when using general event management platforms (Whova,
+            Stova, Cvent) for a spiritually grounded, multi‑language, continent‑wide young adult ministry context, and
+            how RisingGen intentionally addresses them. Focus: qualitative stewardship & covenant-centered outcomes—not
+            business ROI. Individual competitor capabilities can evolve; validate critical assumptions before final
+            decisions.</p>
+        <div class="legend">
+            <span><b style="background:#fef2f2;border:1px solid #fecaca"></b>Limitation (Whova / Stova / Cvent)</span>
+            <span><b style="background:#ecfdf5;border:1px solid #bbf7d0"></b>RisingGen Capability</span>
+            <span><b style="background:#ede9fe;border:1px solid #ddd6fe"></b>Theme Tag</span>
+        </div>
+        <div class="note-block">
+            <strong>Disclaimer:</strong> Descriptions reflect typical usage patterns and public positioning. Some
+            enterprise add‑ons or custom integrations may partially mitigate listed gaps (often with cost & complexity).
+            RisingGen differentiates by unifying multi‑event planning, spiritual community nurturing, inclusion,
+            safeguarding, and governance in one ministry‑aligned fabric.
+        </div>
+    </header>
+
+    <!-- Feature Parity Summary Table -->
+    <div class="parity-wrapper" aria-labelledby="parityTitle">
+        <div class="parity-header">
+            <h2 id="parityTitle">Quick Feature Parity Snapshot</h2>
+            <div class="parity-legend">
+                <span>✅ = Present (native / core)</span>
+                <span>⚠️ = Partial / add‑on / manual workaround</span>
+                <span>✖️ = Generally absent / not purpose-built</span>
+                <span>Distinctive column highlights RisingGen's ministry‑aligned differentiators</span>
+            </div>
+        </div>
+        <div class="parity-scroll">
+            <table class="parity" role="table">
+                <thead>
+                    <tr>
+                        <th style="min-width:230px;">Capability Cluster</th>
+                        <th>Specific Capability</th>
+                        <th>Whova</th>
+                        <th>Stova</th>
+                        <th>Cvent</th>
+                        <th>RisingGen Distinctive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feat-col">Discovery</td>
+                        <td>Pan‑regional multi‑event YA calendar (spiritual + social + institute + service)</td>
+                        <td>⚠️ Single-event centric</td>
+                        <td>⚠️ Portfolio (corporate focus)</td>
+                        <td>⚠️ Portfolio (enterprise focus)</td>
+                        <td><span class="distinct">Unified multi‑context ministry calendar</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Scheduling</td>
+                        <td>Conflict‑aware horizon planning (24‑month ministry cadence)</td>
+                        <td>✖️</td>
+                        <td>⚠️ Manual / custom</td>
+                        <td>⚠️ Manual / pro services</td>
+                        <td><span class="distinct">Embedded milestone & clash detection</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Language</td>
+                        <td>Inline multi‑language content blocks + preference aware surfacing</td>
+                        <td>⚠️ Manual dup content</td>
+                        <td>⚠️ Enterprise translate workflows</td>
+                        <td>⚠️ Enterprise/localisation modules</td>
+                        <td><span class="distinct">Native translation‑ready architecture</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Spiritual Engagement</td>
+                        <td>Year‑round covenant / testimony feed (non commercial)</td>
+                        <td>✖️ (event feed)</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td><span class="distinct">Mission‑framed story & reflection channel</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Onboarding</td>
+                        <td>New / less‑connected YA guided journey & host matching</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td>⚠️ Custom services</td>
+                        <td><span class="distinct">First‑time pathway + peer host pairing</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Community Continuity</td>
+                        <td>Friendship / service / ride & room matching between events</td>
+                        <td>✖️ (per‑event networking)</td>
+                        <td>⚠️ Limited modules</td>
+                        <td>⚠️ Add‑on / marketplace</td>
+                        <td><span class="distinct">Integrated safe matching boards</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Safeguarding</td>
+                        <td>Anonymous pastoral + incident workflow (tiered escalation)</td>
+                        <td>✖️</td>
+                        <td>⚠️ Generic forms</td>
+                        <td>⚠️ Support tickets</td>
+                        <td><span class="distinct">Purpose-built pastoral care ladder</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Inclusion</td>
+                        <td>Accessibility & subsidy checklist gating milestones</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td>⚠️ Manual fields</td>
+                        <td><span class="distinct">Embedded inclusion readiness gates</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Approvals</td>
+                        <td>Ecclesiastical multi‑layer routed approval + SLA timers</td>
+                        <td>✖️</td>
+                        <td>⚠️ Generic workflow</td>
+                        <td>⚠️ Generic workflow</td>
+                        <td><span class="distinct">Calling-aware approval orchestration</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Finance</td>
+                        <td>Subsidy + multi‑currency + reimbursement & travel share console</td>
+                        <td>✖️</td>
+                        <td>⚠️ Partials</td>
+                        <td>⚠️ Add‑on / services</td>
+                        <td><span class="distinct">Holistic stewardship & equity view</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Knowledge</td>
+                        <td>Versioned ministry + logistics playbooks across events</td>
+                        <td>✖️</td>
+                        <td>⚠️ Template cloning</td>
+                        <td>⚠️ Template libraries</td>
+                        <td><span class="distinct">Narrative archive + analytics linkage</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Volunteer Growth</td>
+                        <td>Micro‑learning + mentorship suggestion engine</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td>⚠️ Training add‑ons</td>
+                        <td><span class="distinct">Progressive role enablement</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Live Operations</td>
+                        <td>Dynamic schedule + segmented broadcast + moderated Q&A inbox</td>
+                        <td>⚠️ (basic updates)</td>
+                        <td>⚠️ Modules vary</td>
+                        <td>⚠️ Modules vary</td>
+                        <td><span class="distinct">Unified calm operations console</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Reflection</td>
+                        <td>Post‑event testimony capture & nurture sequences</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td><span class="distinct">Guided spiritual reflection loop</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Analytics</td>
+                        <td>Inclusion & longitudinal discipleship indicators</td>
+                        <td>✖️</td>
+                        <td>⚠️ Attendance / engagement</td>
+                        <td>⚠️ Attendance / engagement</td>
+                        <td><span class="distinct">Discernment / diversity surfacing</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Privacy</td>
+                        <td>Opinionated data minimisation defaults (faith context)</td>
+                        <td>⚠️ Generic settings</td>
+                        <td>⚠️ Generic settings</td>
+                        <td>⚠️ Generic settings</td>
+                        <td><span class="distinct">Curated minimal stewardship baseline</span></td>
+                    </tr>
+                    <tr>
+                        <td class="feat-col">Service Impact</td>
+                        <td>Service project ideation + resource & impact directory</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td>✖️</td>
+                        <td><span class="distinct">Integrated service catalyst layer</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="parity-foot">⚠️ Partial indicates reliance on manual processes, third‑party integrations,
+            higher‑tier licensing or general-purpose modules not purpose‑designed for YA ministry contexts. Assess each
+            vendor's latest roadmap for changes.</div>
+    </div>
+
+    <div class="toolbar">
+        <input id="search" type="text"
+            placeholder="Search (e.g. translation, approval, safeguarding, calendar, onboarding)…" />
+        <div class="filters" id="filters">
+            <button data-filter="all" class="active">All</button>
+            <button data-filter="calendar">Calendar</button>
+            <button data-filter="translation">Translation</button>
+            <button data-filter="planning">Planning</button>
+            <button data-filter="knowledge">Knowledge</button>
+            <button data-filter="complexity">Complexity</button>
+            <button data-filter="customisation">Customisation</button>
+            <button data-filter="approvals">Approvals</button>
+            <button data-filter="finance">Finance</button>
+            <button data-filter="community">Community</button>
+            <button data-filter="safeguarding">Safeguarding</button>
+            <button data-filter="inclusion">Inclusion</button>
+            <button data-filter="analytics">Analytics</button>
+            <button data-filter="volunteer">Volunteer</button>
+            <button data-filter="spiritual">Spiritual</button>
+            <button data-filter="operations">Operations</button>
+            <button data-filter="travel">Travel</button>
+            <button data-filter="service">Service</button>
+            <button data-filter="matching">Matching</button>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ===================== 1. DISCOVERY & AWARENESS ===================== -->
+        <section class="category" data-group="discovery">
+            <h2><span class="badge">Discovery & Visibility Layer</span></h2>
+            <div class="mapping-grid">
+
+                <!-- 1.1 Central Multi-Event Calendar -->
+                <div class="row" data-tags="calendar discovery translation inclusion">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">1.1 Fragmented Calendar Scope</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Calendar</span>
+                        <ul class="meta">
+                            <li><strong>Whova:</strong> Mobile app emphasises single event hubs; limited cross‑event
+                                aggregation for ongoing discovery.</li>
+                            <li><strong>Stova/Cvent:</strong> Multi‑event portfolios exist but oriented to corporate
+                                portfolios—not open ministry ecosystem.</li>
+                            <li><strong>Workaround:</strong> Maintain separate public site or spreadsheets; manual
+                                duplication of key info.</li>
+                            <li><strong>Impact:</strong> Young Adults exit the experience; lose trust; no personalised
+                                spiritual/event suggestions.</li>
+                        </ul>
+                        <p class="impact-note">Need: Seamless continent‑wide calendar with spiritually relevant context.
+                        </p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Unified Europe‑Wide Event Hub</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Calendar</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Persistent multi‑language calendar (conferences, institute,
+                                service, temple trips) in one surface.</li>
+                            <li><strong>Smart Layer:</strong> Conflict‑aware scheduling + early horizon view (24‑month
+                                milestone engine integration).</li>
+                            <li><strong>Personalisation:</strong> Role & interest aware feed (service, study, social)
+                                without ads / noise.</li>
+                            <li><strong>Ministry Effect:</strong> Easier righteous gathering; fewer missed invitations;
+                                continuity of fellowship.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Single trusted discovery entry point.</p>
+                    </div>
+                </div>
+
+                <!-- 1.2 Translation & Language Unity -->
+                <div class="row" data-tags="translation inclusion community calendar">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">1.2 Manual Translation Burden</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Translation</span>
+                        <ul class="meta">
+                            <li><strong>Common Gap:</strong> Auto content translation or live inline language toggles
+                                typically absent or limited; live session interpretation external.</li>
+                            <li><strong>Workaround:</strong> Volunteer copy/paste, 3rd‑party tools (Wordly / Interprefy)
+                                for sessions, inconsistent quality.</li>
+                            <li><strong>Impact:</strong> Late or missing translations; cross‑region unity weakened.</li>
+                        </ul>
+                        <p class="impact-note">Need: Built‑in multi‑language discovery & comms baseline.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Integrated Multi‑Language Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Translation</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Translation‑ready content blocks + language toggle at calendar &
+                                event level.</li>
+                            <li><strong>Assists:</strong> Profile language preference, fallback messaging, queued
+                                volunteer review workflow.</li>
+                            <li><strong>Optional:</strong> Outline for synchronous interpretation scheduling metadata.
+                            </li>
+                            <li><strong>Ministry Effect:</strong> Intercultural testimonies amplified; belonging across
+                                borders.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Reduced friction, broadened reach.</p>
+                    </div>
+                </div>
+
+                <!-- 1.3 Personalised Invitation & Spiritual Context -->
+                <div class="row" data-tags="community spiritual engagement calendar">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">1.3 Generic Engagement Channels</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Community</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Focus on event logistics, sponsor messaging, push notes;
+                                limited year‑round covenant / scripture / service contextual messaging.</li>
+                            <li><strong>Workaround:</strong> Separate WhatsApp / email devotionals; fragmentation &
+                                message fatigue.</li>
+                            <li><strong>Impact:</strong> Spiritual framing diluted; intermittent participation.</li>
+                        </ul>
+                        <p class="impact-note">Need: Purposeful, ministry‑centric feed—not marketing feed.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Engagement Channel with Ministry Framing</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Spiritual</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Uplifting story & invitation stream; testimony & service
+                                highlights.</li>
+                            <li><strong>Targeting:</strong> Role / interest aware (mentor, institute, service) while
+                                respecting opt‑in boundaries.</li>
+                            <li><strong>Safeguards:</strong> Moderation & anonymity support for sensitive questions.
+                            </li>
+                            <li><strong>Effect:</strong> Reinforces covenant identity between major events.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Continuous spiritual resonance.</p>
+                    </div>
+                </div>
+
+                <!-- 1.4 Complexity & Learning Curve -->
+                <div class="row" data-tags="complexity planning volunteer community">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">1.4 Setup Complexity vs Episodic Use</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Complexity</span>
+                        <ul class="meta">
+                            <li><strong>Stova/Cvent:</strong> Powerful but heavy initial configuration; steep learning
+                                curve for infrequent volunteer organisers.</li>
+                            <li><strong>Whova:</strong> Simpler but single-event emphasis; limited multi‑cycle
+                                continuity.</li>
+                            <li><strong>Impact:</strong> Energy consumed on tooling not ministry design; volunteer
+                                fatigue.</li>
+                        </ul>
+                        <p class="impact-note">Need: Opinionated defaults tuned to recurring ministry patterns.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Purposeful Simplicity + Deep Continuity</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Complexity</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Pre-seeded milestone templates; role‑aware UI surfaces only next
+                                relevant tasks.</li>
+                            <li><strong>Continuity:</strong> Auto-carry forward validated data (dietary pattern,
+                                accessibility flags) with consent.</li>
+                            <li><strong>Guidance:</strong> Inline ministry context tooltips (why this step spiritually
+                                matters).</li>
+                            <li><strong>Effect:</strong> Lower cognitive load; faster spiritually aligned progress.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Volunteers focus on people, not platform.</p>
+                    </div>
+                </div>
+
+                <!-- 1.5 Customisation vs Consistency -->
+                <div class="row" data-tags="customisation planning community branding">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">1.5 Over/Under Customisation Imbalance</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Customisation</span>
+                        <ul class="meta">
+                            <li><strong>Cvent/Stova:</strong> Very broad feature matrices—risk of inconsistent
+                                spiritual/branded experiences.</li>
+                            <li><strong>Whova:</strong> Streamlined but constrained for ministry‑specific flows.</li>
+                            <li><strong>Impact:</strong> Either diluted identity or insufficient ministry tailoring.
+                            </li>
+                        </ul>
+                        <p class="impact-note">Need: Guardrails + extensibility within shared reverent design system.
+                        </p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Curated Ministry Design System</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Customisation</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Approved layout & component library (consistent typography,
+                                tone).</li>
+                            <li><strong>Extensible:</strong> Configurable modules (service project, institute slot)
+                                within style boundaries.</li>
+                            <li><strong>Integrity:</strong> Governance review for new pattern proposals.</li>
+                            <li><strong>Effect:</strong> Unified identity; reduced reinvention.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Consistency with contextual flexibility.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================== 2. PLANNING & GOVERNANCE ===================== -->
+        <section class="category" data-group="planning">
+            <h2><span class="badge">Planning, Governance & Continuity</span></h2>
+            <div class="mapping-grid">
+
+                <!-- 2.1 Dynamic Planning Guide -->
+                <div class="row" data-tags="planning knowledge timeline approvals volunteer">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.1 Static Tech‑Centric Guides</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Planning</span>
+                        <ul class="meta">
+                            <li><strong>Observed:</strong> Official guides emphasise platform configuration;
+                                non‑platform spiritual & pastoral tasks tracked elsewhere.</li>
+                            <li><strong>Workaround:</strong> Ad‑hoc spreadsheets; lost version history; missed early
+                                milestones.</li>
+                            <li><strong>Impact:</strong> Rushed programming; less time for revelatory design.</li>
+                        </ul>
+                        <p class="impact-note">Need: Holistic (logistics + ministry) milestone engine.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Living Timeline & Milestone Engine</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Planning</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> 24‑month scaffold (calling, venue, budget, spiritual focus) w/
+                                ownership & escalation.</li>
+                            <li><strong>Adaptation:</strong> Auto inserts local regulatory / safeguarding tasks.</li>
+                            <li><strong>Continuity:</strong> Prior conference archive links each milestone to past
+                                learnings.</li>
+                            <li><strong>Effect:</strong> Creates margin for prayerful iteration.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Calm, deliberate preparation.</p>
+                    </div>
+                </div>
+
+                <!-- 2.2 Internal Knowledge Repository -->
+                <div class="row" data-tags="knowledge volunteer planning continuity">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.2 Fragmented Best Practices Storage</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Knowledge</span>
+                        <ul class="meta">
+                            <li><strong>Whova:</strong> Single‑event focus; no cross‑event private wiki.</li>
+                            <li><strong>Stova/Cvent:</strong> Cloning & templates but limited qualitative narrative
+                                ("why it worked").</li>
+                            <li><strong>Impact:</strong> Tacit knowledge lost; reinvention; volunteer burnout.</li>
+                        </ul>
+                        <p class="impact-note">Need: Versioned ministry & logistics playbooks.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Living Knowledge Base & Template Library</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Knowledge</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Role playbooks, case studies, retrospective snapshots.</li>
+                            <li><strong>Context:</strong> Links analytics + outcomes to practices (what lifted
+                                engagement).</li>
+                            <li><strong>Mentorship:</strong> Suggests mentors based on prior roles & strengths.</li>
+                            <li><strong>Effect:</strong> Compounding improvement vs reset cycles.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Stewardship memory preserved.</p>
+                    </div>
+                </div>
+
+                <!-- 2.3 Approvals & Visibility -->
+                <div class="row" data-tags="approvals planning finance governance">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.3 Opaque Multi‑Layer Approvals</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Approvals</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Provide document upload / tasks; not tailored to church
+                                callings & ecclesiastical signoffs.</li>
+                            <li><strong>Workaround:</strong> Email chains & manual status spreadsheets.</li>
+                            <li><strong>Impact:</strong> Latency; cancellations; morale drop.</li>
+                        </ul>
+                        <p class="impact-note">Need: Transparent routed ecclesiastical workflow.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Structured Approval & Finance Workflow</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Approvals</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Sequential/parallel routing, SLA timers, document version
+                                control.</li>
+                            <li><strong>Visibility:</strong> Real‑time stage board + escalation logic.</li>
+                            <li><strong>Integration:</strong> Finance console hooks (budget snapshot per stage).</li>
+                            <li><strong>Effect:</strong> Predictable pace; reduced volunteer attrition.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Faster righteous decision cycles.</p>
+                    </div>
+                </div>
+
+                <!-- 2.4 Financial Stewardship -->
+                <div class="row" data-tags="finance approvals inclusion">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.4 Disjointed Finance & Subsidy Handling</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Finance</span>
+                        <ul class="meta">
+                            <li><strong>Gap:</strong> Registration & payment exist; multi‑currency insight, subsidy
+                                workflows, travel share cost modelling limited or external.</li>
+                            <li><strong>Workaround:</strong> Manual spreadsheets; delayed reimbursements; equity blind
+                                spots.</li>
+                            <li><strong>Impact:</strong> Financial stress; exclusion of lower‑means participants.</li>
+                        </ul>
+                        <p class="impact-note">Need: Real‑time stewardship + inclusion lens.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Finance Console & Inclusion Support</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Finance</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Budget templates, live variance, receipt/refund workflow, subsidy
+                                request review.</li>
+                            <li><strong>Inclusion:</strong> Early cost transparency & travel share facilitation.</li>
+                            <li><strong>Controls:</strong> Role‑based access + data minimisation for privacy.</li>
+                            <li><strong>Effect:</strong> Anxiety lowered; broader participation.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Trusted, equitable stewardship.</p>
+                    </div>
+                </div>
+
+                <!-- 2.5 Volunteer Formation & Training -->
+                <div class="row" data-tags="volunteer knowledge planning community">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.5 Ad‑Hoc Volunteer Onboarding</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Volunteer</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Provide generic roles / tasks; spiritual, pastoral,
+                                mentoring guidance external.</li>
+                            <li><strong>Impact:</strong> Steep learning curve; repeated mistakes; burnout.</li>
+                        </ul>
+                        <p class="impact-note">Need: Role + ministry competency growth path.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Progressive Onboarding & Mentorship Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Volunteer</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Milestone‑timed micro lessons, mentor pairing, capability
+                                tagging.</li>
+                            <li><strong>Continuity:</strong> Service history & retrospective linkage.</li>
+                            <li><strong>Support:</strong> Burnout risk signals & recognition prompts.</li>
+                            <li><strong>Effect:</strong> Sustained, confident stewardship.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Higher retention & depth.</p>
+                    </div>
+                </div>
+
+                <!-- 2.6 Live Operations & Real-Time Updates -->
+                <div class="row" data-tags="operations planning community engagement">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.6 Dispersed Live Event Operations</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Operations</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Provide announcements & schedule pages; segmentation, change
+                                logging & moderated Q&A often siloed.</li>
+                            <li><strong>Workaround:</strong> Parallel WhatsApp groups + manual message duplication.</li>
+                            <li><strong>Impact:</strong> Noise, missed updates, organiser overload.</li>
+                        </ul>
+                        <p class="impact-note">Need: Calm, unified operations surface.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Integrated Live Operations Console</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Operations</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Dynamic schedule edits with audit tag; segmented broadcast (role,
+                                language, group).</li>
+                            <li><strong>Engagement:</strong> Moderated Q&A inbox with escalate & merge.</li>
+                            <li><strong>Safety:</strong> Incident quick-link + status panel.</li>
+                            <li><strong>Effect:</strong> Reduces chaos; preserves reverent tone.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Focused execution & clarity.</p>
+                    </div>
+                </div>
+
+                <!-- 2.7 Travel, Ride & Room Coordination -->
+                <div class="row" data-tags="travel matching inclusion finance community">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">2.7 External Travel & Room Share Coordination</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Travel</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Basic attendee lists; no ministry‑specific safe ride or room
+                                share workflow.</li>
+                            <li><strong>Workaround:</strong> Unmoderated spreadsheets & ad‑hoc chat threads.</li>
+                            <li><strong>Impact:</strong> Safety uncertainty; missed cost saving; exclusion of distant
+                                YAs.</li>
+                        </ul>
+                        <p class="impact-note">Need: Trust‑building sharing flows with light safeguards.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Ride & Room Matching Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Travel</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Profile preference filters (language, timing, comfort),
+                                verification badges (calling / prior participation).</li>
+                            <li><strong>Support:</strong> Safety guidance prompts; opt‑in visibility windows.</li>
+                            <li><strong>Integration:</strong> Cost sharing indicators feeding finance inclusion
+                                analytics.</li>
+                            <li><strong>Effect:</strong> Lowers financial & social barriers.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Expanded feasible attendance radius.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================== 3. SAFEGUARDING, INCLUSION & PASTORAL CARE ===================== -->
+        <section class="category" data-group="safeguarding">
+            <h2><span class="badge">Safeguarding • Inclusion • Pastoral Care</span></h2>
+            <div class="mapping-grid">
+
+                <!-- 3.1 Incident & Pastoral Reporting -->
+                <div class="row" data-tags="safeguarding inclusion spiritual community">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">3.1 Limited Built‑In Safeguarding Channels</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Safeguarding</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Generic support / Q&A modules; no pastoral triage ladder or
+                                anonymity emphasis for sensitive issues.</li>
+                            <li><strong>Workaround:</strong> Private phone / WhatsApp; inconsistent documentation.</li>
+                            <li><strong>Impact:</strong> Under‑reporting; delayed intervention; safety perception
+                                decline.</li>
+                        </ul>
+                        <p class="impact-note">Need: Compassionate, structured incident flow.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Incident & Pastoral Care Workflow</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Safeguarding</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Anonymous/named reporting, triage queue, escalation escalation
+                                ladder (pastoral vs administrative).</li>
+                            <li><strong>Support:</strong> Status transparency, resource links, audit trail (privacy
+                                aware).</li>
+                            <li><strong>Effect:</strong> Faster, compassionate response; trust preserved.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Safer environment & visible care.</p>
+                    </div>
+                </div>
+
+                <!-- 3.2 Inclusion & Accessibility Standards -->
+                <div class="row" data-tags="inclusion accessibility finance community">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">3.2 Ad‑Hoc Inclusion & Accessibility Practices</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Inclusion</span>
+                        <ul class="meta">
+                            <li><strong>Gap:</strong> Accessibility checklists, subsidy intake, dietary & mobility
+                                integration spread across forms & email.</li>
+                            <li><strong>Impact:</strong> Unequal accommodations; hidden barriers.</li>
+                        </ul>
+                        <p class="impact-note">Need: Embedded inclusive design disciplines.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Inclusion Standards Toolkit</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Inclusion</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Accessibility checklist gating milestones; accommodation &
+                                subsidy workflow.</li>
+                            <li><strong>Metrics:</strong> Participation diversity indicators (language, mobility, cost
+                                assistance uptake).</li>
+                            <li><strong>Effect:</strong> Early detection of exclusion trends.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Broader, equitable participation.</p>
+                    </div>
+                </div>
+
+                <!-- 3.3 Post-Event Spiritual Retention -->
+                <div class="row" data-tags="spiritual community analytics retention">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">3.3 Minimal Post‑Event Spiritual Follow‑Up</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Spiritual</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Surveys & push notes available; reflective discipleship
+                                prompts & journal continuity uncommon.</li>
+                            <li><strong>Impact:</strong> Spiritual uplift decays; shallow retention of commitments.</li>
+                        </ul>
+                        <p class="impact-note">Need: Structured reflection + reconnection cues.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Reflection & Reconnection Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Spiritual</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Testimony & insight capture prompts, post‑event nurture sequence,
+                                small group follow‑ups.</li>
+                            <li><strong>Continuation:</strong> Suggests service / institute next steps.</li>
+                            <li><strong>Effect:</strong> Reinforces application & covenant progression.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Extended discipleship momentum.</p>
+                    </div>
+                </div>
+
+                <!-- 3.4 Friendship & Mentoring Continuity -->
+                <div class="row" data-tags="community matching spiritual retention">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">3.4 Short-Lived Event Connections</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Matching</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Provide per-event networking; relationships decay after
+                                event closes.</li>
+                            <li><strong>Impact:</strong> Momentum lost; isolation returns; mentoring opps missed.</li>
+                        </ul>
+                        <p class="impact-note">Need: Persistent ministry network surface.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Year‑Round Friendship & Mentoring Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Matching</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Interest & service intent tags, gentle re‑connect prompts, mentor
+                                suggestion engine.</li>
+                            <li><strong>Inclusion:</strong> Highlights newcomers / under‑connected profiles to hosts.
+                            </li>
+                            <li><strong>Spiritual:</strong> Encourages shared study / service pair formation.</li>
+                            <li><strong>Effect:</strong> Sustains discipleship relationships between events.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Continuous fellowship growth.</p>
+                    </div>
+                </div>
+
+                <!-- 3.5 Service Project Ideation & Impact -->
+                <div class="row" data-tags="service impact inclusion community spiritual">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">3.5 Service Project Coordination Outside Platform</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Service</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Event engines not tailored to ongoing community service
+                                ideation & follow‑through.</li>
+                            <li><strong>Workaround:</strong> External forms, chats, separate volunteer lists.</li>
+                            <li><strong>Impact:</strong> Fragmented impact tracking; reduced sustained service culture.
+                            </li>
+                        </ul>
+                        <p class="impact-note">Need: Integrated service catalyst & reflection thread.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Service & Impact Platform Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Service</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Idea templates, resource directory (missionaries, partners),
+                                opportunity matching.</li>
+                            <li><strong>Tracking:</strong> Post‑service experience sharing & testimony capture feeding
+                                analytics.</li>
+                            <li><strong>Inclusion:</strong> Highlights low‑barrier service for new / anxious
+                                participants.</li>
+                            <li><strong>Effect:</strong> Converts uplift to sustained outward action.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Living pattern of ministering service.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================== 4. INSIGHT & ANALYTICS ===================== -->
+        <section class="category" data-group="analytics">
+            <h2><span class="badge">Insight, Discernment & Data Stewardship</span></h2>
+            <div class="mapping-grid">
+
+                <!-- 4.1 Depth of Ministry Analytics -->
+                <div class="row" data-tags="analytics spiritual inclusion">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">4.1 Activity-Centric Metrics Only</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Analytics</span>
+                        <ul class="meta">
+                            <li><strong>Focus:</strong> Check-ins, session attendance, engagement clicks; limited
+                                longitudinal spiritual or inclusion indicators.</li>
+                            <li><strong>Impact:</strong> Design decisions skew toward visible voices; hidden groups
+                                underserved.</li>
+                        </ul>
+                        <p class="impact-note">Need: Balanced quantitative + qualitative ministry insight.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Discernment Analytics Layer</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Analytics</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Participation diversity trends, follow‑up engagement, reflection
+                                themes (anonymised).</li>
+                            <li><strong>Synthesis:</strong> Surfaces underserved cohorts & inclusion deltas
+                                pre‑planning.</li>
+                            <li><strong>Safeguards:</strong> Privacy-preserving aggregation; role scoped views.</li>
+                            <li><strong>Effect:</strong> Stewardship guided by both data & spiritual impression.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Informed, compassionate adjustments.</p>
+                    </div>
+                </div>
+
+                <!-- 4.2 Data Minimisation & Privacy -->
+                <div class="row" data-tags="compliance safeguarding analytics">
+                    <span class="divider-label">Mapping</span>
+                    <div class="col left">
+                        <h3 class="limitation-title">4.2 Generic Privacy Configuration</h3>
+                        <span class="pill limit">Limitation</span><span class="pill scope">Safeguarding</span>
+                        <ul class="meta">
+                            <li><strong>Platforms:</strong> Provide security & consent settings; faith‑context sensitive
+                                minimisation patterns not curated.</li>
+                            <li><strong>Impact:</strong> Over‑collection risk; volunteer uncertainty with GDPR
+                                stewardship.</li>
+                        </ul>
+                        <p class="impact-note">Need: Opinionated, safer defaults.</p>
+                    </div>
+                    <div class="col right">
+                        <h3 class="rg-title">Compliance & Safeguarding Framework</h3>
+                        <span class="pill rg">RisingGen</span><span class="pill scope">Safeguarding</span>
+                        <ul class="solution-points">
+                            <li><strong>Core:</strong> Data minimisation defaults, consent registry, role-based field
+                                visibility.</li>
+                            <li><strong>Operational:</strong> Audit export + periodic stewardship prompts.</li>
+                            <li><strong>Effect:</strong> Builds participant trust; reduces liability fear.</li>
+                        </ul>
+                        <p class="impact-note">Outcome: Trustworthy stewardship baseline.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>RisingGen Comparison Mapping • © 2025</footer>
+
+    <script>
+        const search = document.getElementById('search');
+        const buttons = [...document.querySelectorAll('#filters button')];
+        const rows = [...document.querySelectorAll('.row')];
+
+        function applyFilters() {
+            const q = search.value.trim().toLowerCase();
+            const active = buttons.filter(b => b.classList.contains('active') && b.dataset.filter !== 'all').map(b => b.dataset.filter);
+            rows.forEach(r => {
+                const text = r.innerText.toLowerCase();
+                const tags = (r.getAttribute('data-tags') || '').split(/\s+/);
+                const tagMatch = active.length === 0 || active.every(a => tags.includes(a));
+                const textMatch = !q || text.includes(q);
+                r.style.display = tagMatch && textMatch ? '' : 'none';
+            });
+        }
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.dataset.filter === 'all') {
+                    buttons.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+                } else {
+                    document.querySelector('[data-filter="all"]').classList.remove('active');
+                    btn.classList.toggle('active');
+                    if (!buttons.some(b => b.classList.contains('active') && b.dataset.filter !== 'all')) {
+                        document.querySelector('[data-filter="all"]').classList.add('active');
+                    }
+                }
+                applyFilters();
+            });
+        });
+        search.addEventListener('input', applyFilters);
+    </script>
+</body>
+
+</html>

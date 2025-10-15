@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen Developer Package - Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .mission-box {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .section {
+            margin: 40px 0;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #7c3aed;
+            padding-bottom: 10px;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .doc-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+        }
+
+        .doc-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .doc-card p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .doc-card .doc-link {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .doc-card .doc-link:hover {
+            text-decoration: underline;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .priority-critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-high {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-medium {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .features-preview {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 4px solid #0284c7;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info {
+            background: #f7fee7;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 RisingGen Developer Package</h1>
+            <p class="subtitle">Complete Documentation for V1 Platform Development</p>
+            <p style="color: #7c3aed; font-weight: 600;">Ministry-focused platform for European YSA events</p>
+        </div>
+
+        <div class="mission-box">
+            <strong>Project Mission:</strong><br>
+            Draw Europe's young adults to the Savior and their covenants, enable faith-building connections, facilitate
+            conferences, communicate activities, and build lifelong disciples.
+        </div>
+
+        <div class="features-preview">
+            <h3 style="color: #0284c7; margin-bottom: 15px;">🚀 V1 Core Features to Build</h3>
+            <div class="features-list">
+                <div class="feature-item">
+                    <strong>📅 Centralized Event Calendar</strong><br>
+                    <small>Single source of truth for European YSA events</small>
+                </div>
+                <div class="feature-item">
+                    <strong>🧙‍♂️ Guided Event Creation</strong><br>
+                    <small>Step-by-step wizard with templates</small>
+                </div>
+                <div class="feature-item">
+                    <strong>📝 Smart Registration Forms</strong><br>
+                    <small>Dynamic forms reducing follow-up</small>
+                </div>
+                <div class="feature-item">
+                    <strong>💳 Integrated Payments</strong><br>
+                    <small>Multi-currency handling & reconciliation</small>
+                </div>
+                <div class="feature-item">
+                    <strong>📊 Organizer Dashboard</strong><br>
+                    <small>Mission control for event management</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Essential Documentation</h2>
+            <div class="doc-grid">
+                <div class="doc-card" onclick="window.open('README.html', '_blank')">
+                    <h3>Project Overview <span class="priority-badge priority-critical">Start Here</span></h3>
+                    <p>Complete project introduction, mission, features, and current status. Essential first read for
+                        understanding the platform.</p>
+                    <a href="README.html" class="doc-link">Open README.html →</a>
+                </div>
+
+
+
+                <div class="doc-card" onclick="window.open('Technical-Requirements.html', '_blank')">
+                    <h3>Technical Requirements <span class="priority-badge priority-critical">Critical</span></h3>
+                    <p>Detailed technical specifications, tech stack recommendations, and implementation requirements.
+                    </p>
+                    <a href="Technical-Requirements.html" class="doc-link">Open Technical-Requirements.html →</a>
+                </div>
+
+                <div class="doc-card" onclick="window.open('Design-System.html', '_blank')">
+                    <h3>Design System <span class="priority-badge priority-high">High</span></h3>
+                    <p>Complete design guidelines, colors, typography, components, and accessibility requirements.</p>
+                    <a href="Design-System.html" class="doc-link">Open Design-System.html →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Interactive Feature Documentation</h2>
+            <div class="doc-grid">
+                <div class="doc-card" onclick="window.open('v1_features.html', '_blank')">
+                    <h3>V1 Features Interactive <span class="priority-badge priority-high">High</span></h3>
+                    <p>Searchable, filterable overview of all V1 features with pain point mappings and ministry impact.
+                    </p>
+                    <a href="v1_features.html" class="doc-link">Open v1_features.html →</a>
+                </div>
+
+                <div class="doc-card" onclick="window.open('solutionMapping.html', '_blank')">
+                    <h3>Solution Mapping <span class="priority-badge priority-high">High</span></h3>
+                    <p>Detailed mapping of pain points to specific solution features. Shows why each feature matters.
+                    </p>
+                    <a href="solutionMapping.html" class="doc-link">Open solutionMapping.html →</a>
+                </div>
+
+                <div class="doc-card" onclick="window.open('comparisonMapping.html', '_blank')">
+                    <h3>Platform Comparison <span class="priority-badge priority-medium">Medium</span></h3>
+                    <p>How RisingGen addresses limitations of commercial platforms like Whova, Stova, and Cvent.</p>
+                    <a href="comparisonMapping.html" class="doc-link">Open comparisonMapping.html →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🗺️ Architecture & User Experience</h2>
+            <div class="doc-grid">
+                <div class="doc-card" onclick="window.open('01-Site-Map.html', '_blank')">
+                    <h3>Site Map <span class="priority-badge priority-high">High</span></h3>
+                    <p>Complete information architecture showing all pages, features, and navigation structure.</p>
+                    <a href="01-Site-Map.html" class="doc-link">Open 01-Site-Map.html →</a>
+                </div>
+
+                <div class="doc-card" onclick="window.open('02-User-Flow-Diagrams.html', '_blank')">
+                    <h3>User Flow Diagrams <span class="priority-badge priority-high">High</span></h3>
+                    <p>Interactive user journey flows showing step-by-step processes for key features.</p>
+                    <a href="02-User-Flow-Diagrams.html" class="doc-link">Open 02-User-Flow-Diagrams.html →</a>
+                </div>
+
+                <div class="doc-card" onclick="window.open('03-Content-Hierarchy.html', '_blank')">
+                    <h3>Content Hierarchy <span class="priority-badge priority-medium">Medium</span></h3>
+                    <p>Detailed content organization and information architecture for the platform.</p>
+                    <a href="03-Content-Hierarchy.html" class="doc-link">Open 03-Content-Hierarchy.html →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎨 Design Assets</h2>
+            <div class="doc-grid">
+                <div class="doc-card" onclick="window.open('websiteWireframes/', '_blank')">
+                    <h3>Website Wireframes <span class="priority-badge priority-high">High</span></h3>
+                    <p>Visual designs for Homepage, Events, Community, Engagement, and Service pages. Essential for UI
+                        implementation.</p>
+                    <a href="websiteWireframes/" class="doc-link">Open websiteWireframes folder →</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h3 style="color: #65a30d; margin-bottom: 15px;">📞 Questions or Clarifications?</h3>
+            <p>This package contains comprehensive documentation for building RisingGen V1. If you need clarification on
+                any requirements, features, or technical specifications, please don't hesitate to reach out.</p>
+            <p style="margin-top: 15px; font-weight: 600; color: #2d3748;">All documentation is ministry-focused and
+                avoids business terminology - this is a platform to serve covenant community, not commercial metrics.
+            </p>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; color: #7c3aed; font-weight: 600;">
+            Developer Package Created: October 16, 2025
+        </p>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('.doc-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.borderLeftWidth = '6px';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.borderLeftWidth = '4px';
+            });
+        });
+    </script>
+</body>
+
+</html>

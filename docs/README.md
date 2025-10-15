@@ -1,82 +1,71 @@
 # RisingGen Documentation
 
-Welcome to the comprehensive documentation hub for the RisingGen platform - Europe's unified digital solution for Young Single Adults (YSAs).
+Welcome to the documentation for RisingGen V1 - Ministry-focused platform replacing fragmented tools with unified, trusted solution for European YSA events.
 
-## 📋 Documentation Structure
+## 📋 V1 Documentation Structure
 
-### 🏗️ Architecture Documentation
+### 🏗️ Architecture & System Design
 
-- [System Overview](architecture/system-overview.md) - Complete platform architecture
-- [Database Design](architecture/database-design.md) - Data models and relationships
-- [API Specification](architecture/api-specification.md) - REST API documentation
-- [Security Framework](architecture/security.md) - Security and compliance measures
+- [System Overview V2](architecture/system-overview-v2.md) - V1 feature architecture
+- [Pain Point Matrix](architecture/pain-point-matrix.md) - Ministry challenges addressed
+- [Competitive Analysis](architecture/competitive-analysis.md) - How we address platform limitations
+- [Design System](architecture/design-system.html) - Visual components
 
-### 🔧 Development Documentation
+### 🔧 Development Essentials
 
-- [Getting Started](development/getting-started.md) - Environment setup and first steps
-- [Coding Standards](development/coding-standards.md) - Code quality and conventions
-- [Testing Guide](development/testing-guide.md) - Testing strategies and tools
-- [Branch Strategy](development/branch-strategy.md) - Git workflow and branching model
+- [Getting Started V2](development/getting-started-v2.md) - Setup for V1 features
+- [Component Library](development/component-library.html) - UI components for V1
+- [Coding Standards](development/coding-standards.md) - Code quality guidelines
+- [Branch Strategy](development/branch-strategy.md) - Simple Git workflow
 
 ### 📊 Project Management
 
-- [Project Roadmap](project-management/roadmap.md) - Development timeline and milestones
-- [Sprint Planning](project-management/sprint-planning.md) - Agile development process
-- [Feature Tracking](project-management/feature-tracking.md) - MVP features and status
+- [Project Roadmap](project-management/roadmap.md) - V1 development timeline
+- [Four Pillars Framework](project-management/four-pillars-framework.md) - Ministry architecture
+- [Feature Tracking](project-management/feature-tracking.md) - V1 features status
 
 ### 🎨 Design System
 
-- [Design Guidelines](design/design-system.md) - Visual identity and UI principles
+- [Design System V2](design/design-system-v2.md) - V1 visual identity
 - [Component Library](design/component-library.md) - Reusable UI components
 - [Brand Guidelines](design/brand-guidelines.md) - RisingGen brand standards
-
-### 🌐 API Documentation
-
-- [Authentication](api/authentication.md) - JWT and user verification
-- [Core Endpoints](api/endpoints.md) - Complete API reference
-- [Integration Examples](api/examples.md) - Code samples and usage
+- [UI/UX Principles](design/ui-ux-principles.md) - Ministry-first design approach
 
 ## 🚀 Quick Links
 
 - **Live Documentation**: [docs/index.html](index.html)
-- **MVP Guide**: [../README.md](../README.md)
-- **Phase 1 Deliverables**: Available in excluded `Main/` folder
-- **Project Repository**: [GitHub](https://github.com/risinggen/risinggen)
+- **Phase 1 Visualizations**: [../Main/Phase1/](../Main/Phase1/) - Site Map, User Flows, Content Hierarchy
+- **V1 Features**: [../disregard/v1_features.html](../disregard/v1_features.html) - Core capabilities
+- **Solution Mapping**: [../disregard/solutionMapping.html](../disregard/solutionMapping.html) - Pain point resolution
 
-## 👥 Development Team
+## 🎯 V1 Mission
 
-- **@sam-dev** - Lead Developer & Project Manager
-- **@stephano-dev** - Frontend Specialist & UX Implementation
-- **@andreas-dev** - Backend Architecture & Infrastructure
-- **test-extras** - Experimental features and testing
+**Draw Europe's young adults to the Savior and their covenants, enable faith-building connections, facilitate conferences, communicate activities, and build lifelong disciples.**
 
-## 📈 Current Status
+### 🌟 V1 Core Features
 
-**Phase 1**: ✅ Complete - Architecture and Information Design  
-**Phase 2**: ✅ Complete - Interactive Frontend Development  
-**Phase 3**: 🚧 In Progress - Backend Development and API Integration  
-**Phase 4**: ⏳ Planned - Testing and Production Deployment
+1. **📅 Centralized European Event Calendar** - Single source of truth for YSA events
+2. **🧙‍♂️ Guided Event Creation Wizard** - Step-by-step event page creation
+3. **📝 Smart & Customizable Registration Forms** - Reduces follow-up burden
+4. **💳 Integrated & Secure Payments** - Multi-currency handling
+5. **📊 Organizer's Command Center Dashboard** - Mission control interface
 
-### 🎉 Recent Achievements (September 2024)
+### 🏛️ Ministry Foundation
 
-- ✅ **Complete React Frontend** - Fully functional single-page application
-- ✅ **Modern Tech Stack** - React 18, TypeScript, Tailwind CSS, Framer Motion
-- ✅ **Responsive Design** - Mobile-first approach with stunning animations
-- ✅ **Navigation System** - Complete routing with React Router
-- ✅ **Component Architecture** - Modular, reusable components
-- ✅ **Brand Integration** - RisingGen purple theme and logo system
-- ✅ **Interactive UI** - Hero sections, four pillars showcase, call-to-actions
-- ✅ **Multiple Pages** - Home, Events, Community, Content, Service, About, Contact
+**Replaces fragmented tools** with unified platform addressing:
 
-### �️ Current Development Stack
+- Discovery barriers and language silos
+- Administrative overwhelm for volunteers
+- Registration complexity and abandonment
+- Financial confusion across currencies
+- Scattered communication channels
 
-**Frontend**: React 18, TypeScript, Vite, Tailwind CSS, Framer Motion  
-**Routing**: React Router DOM  
-**Icons**: Heroicons  
-**Styling**: Tailwind CSS with custom RisingGen theme  
-**Animation**: Framer Motion for smooth transitions  
-**Build Tool**: Vite for fast development and optimized builds
+### 📈 Current Status
 
----
+**V1 Planning**: ✅ Complete - Feature definition and pain point mapping  
+**Frontend Design**: ✅ Complete - Interactive visualizations and architecture  
+**Development**: 🚧 Ready - Streamlined for ministry outcomes
 
-_Last updated: September 2, 2025_
+## Last Updated
+
+October 16, 2025

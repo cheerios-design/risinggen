@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen V1 - Project Overview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background: #f7fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 30px 0 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        .mission-box {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .feature-item h4 {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status-complete {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-ready {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .foundations-list {
+            background: #fff7ed;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ea580c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>RisingGen V1 Documentation</h1>
+        <p class="intro-text">Ministry-focused platform replacing fragmented tools with unified, trusted solution for
+            European YSA events.</p>
+
+        <div class="mission-box">
+            <strong>V1 Mission:</strong><br>
+            Draw Europe's young adults to the Savior and their covenants, enable faith-building connections, facilitate
+            conferences, communicate activities, and build lifelong disciples.
+        </div>
+
+        <h2>🌟 V1 Core Features</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <h4>📅 Centralized European Event Calendar</h4>
+                <p>Single source of truth for YSA events across Europe with advanced filtering and cross-regional
+                    discovery.</p>
+            </div>
+            <div class="feature-item">
+                <h4>🧙‍♂️ Guided Event Creation Wizard</h4>
+                <p>Step-by-step event page creation with ministry-aligned templates and safeguarding checks.</p>
+            </div>
+            <div class="feature-item">
+                <h4>📝 Smart & Customizable Registration Forms</h4>
+                <p>Intelligent forms that reduce follow-up burden and capture essential information upfront.</p>
+            </div>
+            <div class="feature-item">
+                <h4>💳 Integrated & Secure Payments</h4>
+                <p>Multi-currency payment handling with transparent reconciliation for organizers.</p>
+            </div>
+            <div class="feature-item">
+                <h4>📊 Organizer's Command Center Dashboard</h4>
+                <p>Mission control interface combining attendee management with at-a-glance insights.</p>
+            </div>
+        </div>
+
+        <h2>🏛️ Ministry Foundation</h2>
+        <div class="foundations-list">
+            <p><strong>Replaces fragmented tools</strong> with unified platform addressing:</p>
+            <ul>
+                <li>Discovery barriers and language silos</li>
+                <li>Administrative overwhelm for volunteers</li>
+                <li>Registration complexity and abandonment</li>
+                <li>Financial confusion across currencies</li>
+                <li>Scattered communication channels</li>
+            </ul>
+        </div>
+
+        <h2>📈 Current Status</h2>
+        <ul>
+            <li><strong>V1 Planning:</strong> <span class="status-badge status-complete">✅ Complete</span> - Feature
+                definition and pain point mapping</li>
+            <li><strong>Frontend Design:</strong> <span class="status-badge status-complete">✅ Complete</span> -
+                Interactive visualizations and architecture</li>
+            <li><strong>Development:</strong> <span class="status-badge status-ready">🚧 Ready</span> - Streamlined for
+                ministry outcomes</li>
+        </ul>
+
+        <h2>📋 Essential Documentation Files Included</h2>
+        <h3>🔍 Interactive Visualizations</h3>
+        <ul>
+            <li><strong>v1_features.html</strong> - Searchable V1 feature set with ministry impact</li>
+            <li><strong>solutionMapping.html</strong> - Pain point to solution mapping</li>
+            <li><strong>comparisonMapping.html</strong> - Commercial platform limitations vs RisingGen</li>
+        </ul>
+
+        <h3>🗺️ Phase 1 Architecture</h3>
+        <ul>
+            <li><strong>01-Site-Map.html</strong> - Complete information architecture</li>
+            <li><strong>02-User-Flow-Diagrams.html</strong> - User journey flows</li>
+            <li><strong>03-Content-Hierarchy.html</strong> - Content organization structure</li>
+        </ul>
+
+        <h3>🎨 Design Assets</h3>
+        <ul>
+            <li><strong>websiteWireframes/</strong> - Visual design mockups for all key pages</li>
+            <li>Homepage, Events, Community, Engagement, Service page designs</li>
+        </ul>
+
+        <p style="text-align: center; margin-top: 40px; color: #7c3aed; font-weight: 600;">
+            Last Updated: October 16, 2025
+        </p>
+    </div>
+</body>
+
+</html>

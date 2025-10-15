@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RisingGen Design System - Interactive Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #2D4B9A 0%, #1A2A56 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu h3 {
+            color: #1a365d;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-item {
+            padding: 10px 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: #1a365d;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul,
+        ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #1a365d;
+            font-weight: 600;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .color-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .color-hex {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #f7fafc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin: 5px 0;
+        }
+
+        .typography-demo {
+            margin: 20px 0;
+        }
+
+        .type-sample {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .type-sample:last-child {
+            border-bottom: none;
+        }
+
+        .type-label {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .type-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .type-h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .type-h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .type-h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .type-h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .type-body {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .type-small {
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .component-showcase {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #2D4B9A;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1a2f5c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #2D4B9A;
+            border: 2px solid #2D4B9A;
+        }
+
+        .btn-secondary:hover {
+            background: #2D4B9A;
+            color: white;
+        }
+
+        .btn-tertiary {
+            background: transparent;
+            color: #2D4B9A;
+        }
+
+        .btn-tertiary:hover {
+            background: rgba(45, 75, 154, 0.1);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-palette {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 RisingGen Design System</h1>
+            <p>Comprehensive design system documentation outlining the visual language, components, and patterns used
+                across the RisingGen platform</p>
+            <div class="breadcrumb">
+                <a href="../index.html">← Back to Documentation Hub</a>
+            </div>
+        </div>
+
+        <div class="nav-menu">
+            <h3>📋 Quick Navigation</h3>
+            <div class="nav-grid">
+                <div class="nav-item" onclick="scrollToSection('principles')">Design Principles</div>
+                <div class="nav-item" onclick="scrollToSection('brand')">Brand Identity</div>
+                <div class="nav-item" onclick="scrollToSection('colors')">Color System</div>
+                <div class="nav-item" onclick="scrollToSection('typography')">Typography</div>
+                <div class="nav-item" onclick="scrollToSection('components')">Components</div>
+                <div class="nav-item" onclick="scrollToSection('layout')">Layout System</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <section id="principles">
+                <h2>🎯 Design Principles</h2>
+
+                <h3>1. Faith-Centered</h3>
+                <p>Our design reflects our values and mission to draw young adults closer to the Savior. Visual elements
+                    convey spiritual strength while remaining modern and relevant to young adults.</p>
+
+                <h3>2. Inclusive & Accessible</h3>
+                <p>Design that welcomes all users regardless of ability, language, or device, meeting WCAG 2.1 AA
+                    accessibility standards and supporting 15+ European languages.</p>
+
+                <h3>3. Community-Focused</h3>
+                <p>Interface design emphasizes connection, collaboration, and shared experiences to strengthen the YSA
+                    community across Europe.</p>
+
+                <h3>4. Simple & Intuitive</h3>
+                <p>Clear, straightforward interactions reduce cognitive load and make features easy to discover and use,
+                    even for first-time users.</p>
+
+                <h3>5. Consistent & Cohesive</h3>
+                <p>A unified design language creates familiarity across all touchpoints, from web to mobile to print
+                    materials.</p>
+            </section>
+
+            <section id="brand">
+                <h2>🏷️ Brand Identity</h2>
+
+                <h3>Logo</h3>
+                <p>The RisingGen logo represents our core mission of drawing young adults to their covenants and the
+                    Savior.</p>
+                <ul>
+                    <li><strong>Primary Logo:</strong> Full-color horizontal version</li>
+                    <li><strong>Secondary Logo:</strong> Stacked version</li>
+                    <li><strong>Icon:</strong> Simplified mark for small spaces</li>
+                    <li><strong>Clear Space:</strong> Minimum 1x height of the icon on all sides</li>
+                    <li><strong>Minimum Size:</strong> 24px height for digital, 1 inch for print</li>
+                </ul>
+            </section>
+
+            <section id="colors">
+                <h2>🌈 Color System</h2>
+
+                <h3>Primary Colors</h3>
+                <div class="color-palette">
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #2D4B9A;"></div>
+                        <div class="color-info">
+                            <h4>Faith Blue</h4>
+                            <div class="color-hex">#2D4B9A</div>
+                            <p>Primary brand color</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #F2B134;"></div>
+                        <div class="color-info">
+                            <h4>Covenant Gold</h4>
+                            <div class="color-hex">#F2B134</div>
+                            <p>Accents, CTAs</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #FFFFFF; border: 2px solid #e2e8f0;"></div>
+                        <div class="color-info">
+                            <h4>Savior Light</h4>
+                            <div class="color-hex">#FFFFFF</div>
+                            <p>Backgrounds, text</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #1A2A56;"></div>
+                        <div class="color-info">
+                            <h4>Rising Deep</h4>
+                            <div class="color-hex">#1A2A56</div>
+                            <p>Headings, emphasis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Secondary Colors</h3>
+                <div class="color-palette">
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #4B9A68;"></div>
+                        <div class="color-info">
+                            <h4>Community Green</h4>
+                            <div class="color-hex">#4B9A68</div>
+                            <p>Success states, growth</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #7B4B9A;"></div>
+                        <div class="color-info">
+                            <h4>Connection Purple</h4>
+                            <div class="color-hex">#7B4B9A</div>
+                            <p>Social features</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #F27B34;"></div>
+                        <div class="color-info">
+                            <h4>Service Orange</h4>
+                            <div class="color-hex">#F27B34</div>
+                            <p>Service opportunities</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-swatch" style="background-color: #E53E3E;"></div>
+                        <div class="color-info">
+                            <h4>Impact Red</h4>
+                            <div class="color-hex">#E53E3E</div>
+                            <p>Alerts, errors</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="typography">
+                <h2>✍️ Typography</h2>
+
+                <h3>Primary Fonts</h3>
+                <p><strong>Headings:</strong> Inter (Sans-serif) - Weights: 700 (Bold), 600 (Semibold)</p>
+                <p><strong>Body:</strong> Inter (Sans-serif) - Weights: 400 (Regular), 500 (Medium)</p>
+
+                <h3>Typography Scale</h3>
+                <div class="typography-demo">
+                    <div class="type-sample">
+                        <div class="type-label">Display - 32px/2rem, Weight 700</div>
+                        <div class="type-display">The quick brown fox jumps</div>
+                    </div>
+                    <div class="type-sample">
+                        <div class="type-label">H1 - 24px/1.5rem, Weight 700</div>
+                        <div class="type-h1">The quick brown fox jumps</div>
+                    </div>
+                    <div class="type-sample">
+                        <div class="type-label">H2 - 20px/1.25rem, Weight 700</div>
+                        <div class="type-h2">The quick brown fox jumps</div>
+                    </div>
+                    <div class="type-sample">
+                        <div class="type-label">H3 - 18px/1.125rem, Weight 600</div>
+                        <div class="type-h3">The quick brown fox jumps</div>
+                    </div>
+                    <div class="type-sample">
+                        <div class="type-label">Body - 16px/1rem, Weight 400</div>
+                        <div class="type-body">The quick brown fox jumps over the lazy dog. This is body text with
+                            proper line height and spacing for optimal readability.</div>
+                    </div>
+                    <div class="type-sample">
+                        <div class="type-label">Small - 14px/0.875rem, Weight 400</div>
+                        <div class="type-small">The quick brown fox jumps over the lazy dog. This is smaller text used
+                            for captions and secondary information.</div>
+                    </div>
+                </div>
+
+                <h3>Fallback Stack</h3>
+                <div class="code-block">font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;</div>
+            </section>
+
+            <section id="components">
+                <h2>🧩 Component Library</h2>
+
+                <h3>Buttons</h3>
+                <p>Four button variants with consistent states and behavior patterns.</p>
+
+                <div class="component-showcase">
+                    <h4>Button Variants</h4>
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-secondary">Secondary Button</button>
+                    <button class="btn btn-tertiary">Tertiary Button</button>
+                </div>
+
+                <h3>Typography Scale Reference</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Element</th>
+                                <th>Size (px/rem)</th>
+                                <th>Weight</th>
+                                <th>Line Height</th>
+                                <th>Letter Spacing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>H1</td>
+                                <td>32px/2rem</td>
+                                <td>700</td>
+                                <td>1.2</td>
+                                <td>-0.025em</td>
+                            </tr>
+                            <tr>
+                                <td>H2</td>
+                                <td>24px/1.5rem</td>
+                                <td>700</td>
+                                <td>1.3</td>
+                                <td>-0.025em</td>
+                            </tr>
+                            <tr>
+                                <td>H3</td>
+                                <td>20px/1.25rem</td>
+                                <td>600</td>
+                                <td>1.4</td>
+                                <td>-0.01em</td>
+                            </tr>
+                            <tr>
+                                <td>H4</td>
+                                <td>18px/1.125rem</td>
+                                <td>600</td>
+                                <td>1.4</td>
+                                <td>-0.01em</td>
+                            </tr>
+                            <tr>
+                                <td>Body</td>
+                                <td>16px/1rem</td>
+                                <td>400</td>
+                                <td>1.6</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Small</td>
+                                <td>14px/0.875rem</td>
+                                <td>400</td>
+                                <td>1.5</td>
+                                <td>0.01em</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="layout">
+                <h2>📐 Layout System</h2>
+
+                <h3>Grid System</h3>
+                <ul>
+                    <li><strong>Base Unit:</strong> 8px (0.5rem)</li>
+                    <li><strong>Column System:</strong> 12-column fluid grid</li>
+                    <li><strong>Gutters:</strong> 16px (1rem) default</li>
+                    <li><strong>Breakpoints:</strong>
+                        <ul>
+                            <li>Mobile: < 640px</li>
+                            <li>Tablet: 640px - 1023px</li>
+                            <li>Desktop: 1024px - 1279px</li>
+                            <li>Large Desktop: ≥ 1280px</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Spacing System</h3>
+                <p>Consistent spacing using 8px increments for harmony and visual rhythm.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Value</th>
+                                <th>Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>space-0</td>
+                                <td>0</td>
+                                <td>No spacing</td>
+                            </tr>
+                            <tr>
+                                <td>space-1</td>
+                                <td>4px (0.25rem)</td>
+                                <td>Tight spacing (icons)</td>
+                            </tr>
+                            <tr>
+                                <td>space-2</td>
+                                <td>8px (0.5rem)</td>
+                                <td>Compact elements</td>
+                            </tr>
+                            <tr>
+                                <td>space-4</td>
+                                <td>16px (1rem)</td>
+                                <td>Standard spacing</td>
+                            </tr>
+                            <tr>
+                                <td>space-6</td>
+                                <td>32px (2rem)</td>
+                                <td>Group separation</td>
+                            </tr>
+                            <tr>
+                                <td>space-8</td>
+                                <td>48px (3rem)</td>
+                                <td>Section spacing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <h2>📚 Additional Resources</h2>
+                <p>This design system is a living document that evolves with the platform. For implementation details,
+                    component specifications, and the latest updates, refer to:</p>
+                <ul>
+                    <li><strong>Figma Library:</strong> Master component library for designers</li>
+                    <li><strong>Storybook:</strong> Interactive component documentation for developers</li>
+                    <li><strong>GitHub Repository:</strong> Code implementation of design system components</li>
+                    <li><strong>Style Guide:</strong> Comprehensive usage guidelines and best practices</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Add smooth scrolling animation for navigation items
+        document.addEventListener('DOMContentLoaded', function () {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    // Add active state visual feedback
+                    navItems.forEach(nav => nav.style.background = '#f7fafc');
+                    this.style.background = '#667eea';
+                    this.style.color = 'white';
+
+                    // Reset after animation
+                    setTimeout(() => {
+                        this.style.background = '#f7fafc';
+                        this.style.color = '#4a5568';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
